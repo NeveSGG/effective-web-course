@@ -4,6 +4,7 @@
   --dark-gray: #5C5C5C;
   --light-gray: #ADADAD;
   --soft-gray: #C2C2C2;
+  --light-soft-gray: #ececec;
   --ultra-light-gray: #f8f8f8;
   --background-gray: rgba(38, 50, 56, 0.16);
   --strong-white: #FFFFFF;
@@ -131,6 +132,7 @@ html {
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
+  position: relative;
 }
 
 /**
@@ -187,6 +189,11 @@ a {
   background-color: transparent;
 }
 
+fieldset {
+  border: none;
+  padding: 0 !important;
+}
+
 /**
   * 1. Remove the bottom border in Chrome 57-
   * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
@@ -196,6 +203,18 @@ abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
   text-decoration: underline dotted; /* 2 */
+}
+
+textarea {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
 }
 
 /**
@@ -1310,6 +1329,172 @@ template {
 
 .ads__grid--card__button:hover {
   background-color: var(--ultra-light-gray);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 220px 135px 0 135px;
+  padding-bottom: 150px;
+  width: calc(100% - 270px);
+  column-gap: 30px;
+  row-gap: 48px;
+}
+
+.footer__image {
+  position: absolute;
+  z-index: -5;
+  bottom: 0;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+}
+
+.footer > div {
+  width: calc(50% - 15px);
+  min-width: 330px;
+  max-width: 570px;
+}
+
+.footer__name {
+  margin: 0;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--light-gray);
+}
+
+.footer__links--icons {
+  display: flex;
+  gap: 37px;
+  padding-top: 8px;
+}
+
+.footer__links--icons > a {
+  cursor: pointer;
+  transition: background-color .2s ease-in-out;
+  border-radius: 50%;
+}
+
+.footer__links--icons > a:hover {
+  background-color: var(--light-yellow);
+}
+
+.mob {
+  display: none;
+}
+
+.footer__email--text {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: -0.5px;
+  color: var(--dark-purple);
+}
+
+.footer__info--links {
+  padding-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  row-gap: 16px;
+}
+
+.footer__info--links > a {
+  width: 169px;
+  cursor: pointer;
+}
+
+.footer__info--links > a:hover {
+  text-decoration: underline;
+}
+
+.footer__form--custom {
+  padding-top: 16px;
+}
+
+.footer__form--custom > fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  
+  gap: 30px;
+}
+
+.form--group {
+  position: relative;
+}
+
+.form--group > input {
+  background-color: var(--light-soft-gray);
+  width: 268px;
+  border-radius: 16px;
+  border: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  color: var(--dark-black);
+  padding: 8px 42px 8px 16px;
+}
+
+.form--group > input:focus {
+  outline: 2px solid var(--light-purple);
+  color: var(--dark-purple)
+}
+
+.form--group > textarea {
+  background-color: var(--light-soft-gray);
+  width: 268px;
+  border-radius: 16px;
+  border: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  color: var(--dark-black);
+  padding: 8px 42px 8px 16px;
+}
+
+.form--group > textarea:focus {
+  outline: 2px solid var(--light-purple);
+  line-height: 25px;
+  color: var(--dark-purple)
+}
+
+.form--group > img {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.messageGroup > textarea {
+  width: 368px;
+  height: 80px;
+}
+
+.submitButton {
+  cursor: pointer;
+  background-color: var(--dark-purple);
+  box-shadow: 0px 8px 24px rgba(38, 50, 56, 0.1), 0px 16px 32px rgba(38, 50, 56, 0.08);
+  border-radius: 16px;
+  border: none;
+  height: 80px;
+  width: 168px;
+
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: 0.25px;
+  color: var(--strong-white);
+  text-shadow: 0px 2px 4px rgba(38, 50, 56, 0.16), 0px 4px 8px rgba(38, 50, 56, 0.08);
+
+  transition: background-color .2s ease-in-out;
+}
+
+.submitButton:hover {
+  background-color: var(--ultra-dark-purple);
 }
 
 @media all and (max-width: 480px) {
