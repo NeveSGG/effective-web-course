@@ -1214,6 +1214,40 @@ template {
   background-color: var(--ultra-dark-purple);
 }
 
+.ads {
+  padding: 205px 135px 0 135px;
+
+}
+
+.ads__title {
+  margin: 0;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: -0.5px;
+  color: var(--light-black);
+
+}
+
+.ads__emoji {
+  margin: 0;
+  padding: 0;
+  font-size: 27px;
+}
+
+.ads__text {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.25px;
+
+  color: var(--light-black);
+  max-width: 940px;
+}
+
 @media all and (max-width: 480px) {
   .Header {
     height: 72px;
