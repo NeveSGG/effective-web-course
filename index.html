@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <title>Fapster App</title>
-
     <link rel="stylesheet" href="./index.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   </head>
   <body>
     <header class="Header Header--onTop" id="site-header">
       <div class="logo" id="logo">
-
         <div class="logo-burger">
           <input type="checkbox" id="checkboxId" class="checkbox visuallyHidden">
           <label for="checkboxId">
@@ -30,21 +25,20 @@
             </div>
           </label>
         </div>
-
         <picture>
           <source 
             media="(min-width: 1025px) and (max-width: 1440px)" 
             srcset="/assets/logo-m.svg" 
-          />
+            />
           <source 
             media="(min-width: 1441px)" 
             srcset="/assets/logo-l.svg" 
-          />
+            />
           <img 
             class="logo__image"
             src="/assets/logo.png" 
             alt="Grid" 
-          />
+            />
         </picture>
         <h1 class="logo__name">
           <a href="#">Grid</a>
@@ -53,94 +47,96 @@
       <nav class="navigation">
         <ul class="navigation__list">
           <li class="navigation__list__item">
-            <a class="navigation__list__item--link" href="#">How it works</a>
+            <a class="navigation__list__item--link" href="#first">How it works</a>
           </li>
           <li class="navigation__list__item separator">
             <p>·</p>
           </li>
           <li class="navigation__list__item">
-            <a class="navigation__list__item--link" href="#">Who we are</a>
+            <a class="navigation__list__item--link" href="#second">Who we are</a>
           </li>
           <li class="navigation__list__item separator">
             <p>·</p>
           </li>
           <li class="navigation__list__item">
-            <a class="navigation__list__item--link" href="#">What we do</a>
+            <a class="navigation__list__item--link" href="#third">What we do</a>
           </li>
           <li class="navigation__list__item separator">
             <p>·</p>
           </li>
           <li class="navigation__list__item">
-            <a class="navigation__list__item--link" href="#">Contact us</a>
+            <a class="navigation__list__item--link" href="#fourth">Contact us</a>
           </li>
         </ul>
       </nav>
       <nav class="nav--mobile closed" id="mobileNavigation">
         <ul class="nav__list">
           <li class="nav__list__item">
-            <a class="nav__list__item--link" href="#">How it works</a>
+            <a class="nav__list__item--link" href="#first">How it works</a>
           </li>
           <li class="nav__list__item separator">
             <p>·</p>
           </li>
           <li class="nav__list__item">
-            <a class="nav__list__item--link" href="#">Who we are</a>
+            <a class="nav__list__item--link" href="#second">Who we are</a>
           </li>
           <li class="nav__list__item separator">
             <p>·</p>
           </li>
           <li class="nav__list__item">
-            <a class="nav__list__item--link" href="#">What we do</a>
+            <a class="nav__list__item--link" href="#third">What we do</a>
           </li>
           <li class="nav__list__item separator">
             <p>·</p>
           </li>
           <li class="nav__list__item">
-            <a class="nav__list__item--link" href="#">Contact us</a>
+            <a class="nav__list__item--link" href="#fourth">Contact us</a>
           </li>
         </ul>
       </nav>
       <button class="Header__button" id="headerButton">
-        Sign In
+      Sign In
       </button>
     </header>
-    <main>
+    <main id="first">
       <div class="backgroundImage">
         <img
           class="backgroundImage--rect1"
           src="/assets/Rectangle.svg"
           alt=""
-        />
+          />
         <img
           class="backgroundImage--rect2"
           src="/assets/Rectangle2.svg"
           alt=""
-        />
+          />
         <img
           class="backgroundImage--img2"
           src="/assets/dots.svg"
           alt=""
-        />
+          />
         <img
           class="backgroundImage--wave"
           src="/assets/Wave.svg"
           alt=""
-        />
+          />
       </div>
       <section class="hero">
         <h1 class="hero__header">
-          Combine <p class="hero__header--underlined">fine</p> <p id="lst-wrd">images</p>
+          Combine 
+          <p class="hero__header--underlined">fine</p>
+          <p id="lst-wrd">images</p>
         </h1>
         <p class="hero__text">
           To represent a product
         </p>
       </section>
-      <a href="#" class="moveButton">
-        <img 
-          src="/assets/arrow-down.svg"
-          alt="Check price"
-          width="44.8"
-          height="44.8"
+      <a href="#second" class="moveButton">
+      <img 
+        src="/assets/arrow-down.svg"
+        alt="Check price"
+        width="44.8"
+        height="44.8"
         />
       </a>
       <section class="content">
@@ -166,17 +162,17 @@
             <img
               src="/assets/card-1.png"
               alt="card"
-            />
+              />
           </div>
           <div class="container_el5"></div>
         </div>
       </section>
       <span class="mobileButton--wrapper">
-        <button class="mobileButton">
-          Learn more
-        </button>
+      <button class="mobileButton">
+      Learn more
+      </button>
       </span>
-      <section class="pricing">
+      <section class="pricing" id="second">
         <h1 class="pricing__name hero__text">
           Affordable pricing
         </h1>
@@ -194,7 +190,7 @@
               Like a pussy
             </p>
             <span class="card__name--comment">
-              FINE!
+            FINE!
             </span>
           </div>
           <div class="card__price">
@@ -222,7 +218,7 @@
               👤 Individual
             </p>
             <span class="card__name--comment">
-              GOOD!
+            GOOD!
             </span>
           </div>
           <div class="card__price">
@@ -256,7 +252,7 @@
               👥 Corporate
             </p>
             <span class="card__name--comment">
-              WOW!
+            WOW!
             </span>
           </div>
           <div class="card__price">
@@ -282,7 +278,7 @@
           <button class="card__button whiteTheme">Extended license</button>
         </div>
       </div>
-      <section class="ads">
+      <section class="ads" id="third">
         <div class="ads__wrapper">
           <h1 class="ads__title">Delivering good designs <span class="ads__title--mobile">since 1954</span><span class="ads__emoji">🚚💨</span></h1>
           <p class="ads__text">We’re the first multi-purpose design kit solutions for businesses. We help you bridge gaps between your layouts, templates and developers to empower all involved.</p>
@@ -294,7 +290,7 @@
                 alt="support"
                 width="70"
                 height="70"
-              />
+                />
               <h1 class="ads__grid--card__title">Support</h1>
               <p class="ads__grid--card__text">Delivering faster and more personalized support with shared screens and cool design systems for Figma</p>
               <button class="ads__grid--card__button">Learn more</button>
@@ -306,7 +302,7 @@
                 alt="Sales growth"
                 width="70"
                 height="70"
-              />
+                />
               <h1 class="ads__grid--card__title">Sales growth</h1>
               <p class="ads__grid--card__text">Identify qualified customers with easy-to-use live chat messaging and AI-based Sales Bot</p>
               <button class="ads__grid--card__button">Learn more</button>
@@ -318,7 +314,7 @@
                 alt="Coponents-driven"
                 width="70"
                 height="70"
-              />
+                />
               <h1 class="ads__grid--card__title">Coponents-driven</h1>
               <p class="ads__grid--card__text">Delivering faster and more personalized support with shared screens and cool design systems for Figma</p>
               <button class="ads__grid--card__button">Learn more</button>
@@ -330,7 +326,7 @@
                 alt="Swap the icon"
                 width="70"
                 height="70"
-              />
+                />
               <h1 class="ads__grid--card__title">Swap the icon</h1>
               <p class="ads__grid--card__text">You can toggle to any icon within Instances and customize outlined stroke to more bolder or lighter</p>
               <button class="ads__grid--card__button">Learn more</button>
@@ -339,53 +335,53 @@
         </div>
       </section>
     </main>
-    <footer class="footer">
+    <footer class="footer" id="fourth">
       <div class="footer__links">
         <h1 class="footer__name">follow us</h1>
         <div class="footer__links--icons">
           <a href="#">
-            <img
-              src="./assets/link1-purple.svg"
+          <img
+            src="./assets/link1-purple.svg"
             />
           </a>
           <a href="#">
-            <img
-              src="./assets/link2-purple.svg"
+          <img
+            src="./assets/link2-purple.svg"
             />
           </a>
           <a href="#">
-            <img
-              src="./assets/link3-purple.svg"
+          <img
+            src="./assets/link3-purple.svg"
             />
           </a>
           <a href="#">
-            <img
-              src="./assets/link4-purple.svg"
+          <img
+            src="./assets/link4-purple.svg"
             />
           </a>
           <a class="mob" href="#">
-            <img
-              src="./assets/link1-black.svg"
+          <img
+            src="./assets/link1-black.svg"
             />
           </a>
           <a class="mob" href="#">
-            <img
-              src="./assets/link2-black.svg"
+          <img
+            src="./assets/link2-black.svg"
             />
           </a>
           <a class="mob" href="#">
-            <img
-              src="./assets/link3-black.svg"
+          <img
+            src="./assets/link3-black.svg"
             />
           </a>
           <a class="mob" href="#">
-            <img
-              src="./assets/link4-black.svg"
+          <img
+            src="./assets/link4-black.svg"
             />
           </a>
           <a class="mob" href="#">
-            <img
-              src="./assets/link5-black.svg"
+          <img
+            src="./assets/link5-black.svg"
             />
           </a>
         </div>
@@ -411,35 +407,35 @@
         <h1 class="footer__name">keep in touch</h1>
         <form class="footer__form--custom">
           <fieldset>
-              <div class="form--group nameGroup">
-                <input type="text" id="input-name" placeholder="Your name" />
-                <img src="./assets/icon-user.svg" />
-              </div>
-              <div class="form--group emailGroup">
-                <input type="email" id="input-email" placeholder="E-mail" />
-                <img src="./assets/icon-mail.svg" />
-              </div>
-              <div class="form--group messageGroup">
-                <textarea type="text" id="input-message" placeholder="Leave your message"></textarea>
-                <img src="./assets/icon-edit.svg" />
-              </div>
-              <div class="form--group controlGroup">
-                <button type="submit" class="submitButton">SEND</button>
-              </div>
+            <div class="form--group nameGroup">
+              <input type="text" id="input-name" placeholder="Your name" />
+              <img src="./assets/icon-user.svg" />
+            </div>
+            <div class="form--group emailGroup">
+              <input type="email" id="input-email" placeholder="E-mail" />
+              <img src="./assets/icon-mail.svg" />
+            </div>
+            <div class="form--group messageGroup">
+              <textarea type="text" id="input-message" placeholder="Leave your message"></textarea>
+              <img src="./assets/icon-edit.svg" />
+            </div>
+            <div class="form--group controlGroup">
+              <button type="submit" class="submitButton">SEND</button>
+            </div>
           </fieldset>
-      </form>
+        </form>
       </div>
       <img
         class="footer__image"
         src="./assets/wave-footer.svg"
         alt=" "
-      />
+        />
       <img
         class="footer__image--mobile"
         src="./assets/footer-background.svg"
         alt=" "
-      />
+        />
     </footer>
-	  <script src="index.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
