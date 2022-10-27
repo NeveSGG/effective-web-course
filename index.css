@@ -1,5 +1,6 @@
 @import url("normalized.css");
 
+/* Header */
 .Header {
   position: fixed;
   top: 0;
@@ -48,6 +49,7 @@
   align-items: center;
 }
 
+/* Nevbar */
 .navigation__list {
   display: flex;
   align-items: center;
@@ -169,10 +171,7 @@
   background-color: var(--dark-purple);
 }
 
-/*
-  Burger Button
-*/
-
+/* Burger Button */
 .logo-burger {
   display: none;
   margin-right: 11px;
@@ -251,6 +250,7 @@
   background-color: transparent;
 }
 
+/* First/Main content */
 .backgroundImage {
   position: relative;
 }
@@ -359,6 +359,7 @@
   animation-delay: 2s;
 }
 
+/* Grid Box */
 .content {
   padding: 0;
   padding-top: 70px;
@@ -526,6 +527,7 @@
   color: var(--strong-white);
 }
 
+/* Pricing part */
 .pricing {
   display: flex;
   flex-direction: column;
@@ -766,8 +768,8 @@
   background-color: var(--ultra-dark-purple);
 }
 
+/* About page */
 .ads {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -864,6 +866,7 @@
   background-color: var(--ultra-light-gray);
 }
 
+/* Footer */
 .footer {
   display: flex;
   flex-wrap: wrap;
