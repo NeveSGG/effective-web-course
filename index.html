@@ -11,21 +11,36 @@
   <body>
     <main>
       <div class="carousel">
-        <button class="carousel__button"></button>
+        <button class="carousel__button carousel__button--left">
+          <img 
+            src="./assets/img/arrowLeft.svg"
+          />
+        </button>
         <div class="carousel__track-container">
           <ul class="carousel__track">
             <li class="carousel__slide">
-              <img src="assets/img/slide-1.jpg" alt="">
+              <img src="assets/img/image-1.jpg" alt="">
             </li>
             <li class="carousel__slide">
-              <img src="assets/img/slide-2.jpg" alt="">
+              <img src="assets/img/image-2.jpg" alt="">
             </li>
             <li class="carousel__slide">
-              <img src="assets/img/slide-3.jpg" alt="">
+              <img src="assets/img/image-3.jpg" alt="">
             </li>
           </ul>
         </div>
-        <button class="carousel__button"></button>
+        <button class="carousel__button carousel__button--right">
+          <img 
+            src="./assets/img/arrowRight.svg"
+          />
+        </button>
+
+        <div class="carousel__nav">
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+        </div>
       </div>
     </main>
   </body>
