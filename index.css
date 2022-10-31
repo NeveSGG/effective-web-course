@@ -49,6 +49,7 @@ main {
   position: relative;
   width: 1000px;
   height: 500px;
+  overflow: hidden;
 }
 
 .carousel__track {
@@ -57,13 +58,37 @@ main {
   margin: 0;
 }
 
-.carousel__slide > img {
+.carousel__slide__image {
   position: absolute;
   z-index: 1;
   top: 0;
-  left: 0;
   width: 1000px;
   height: 500px;
+  transform: translateX(0);
+}
+
+.move-to-left {
+  transform: translateX(-100%);
+  transition: transform .5s ease-in-out;
+}
+
+.move-to-right {
+  transform: translateX(100%);
+  transition: transform .5s ease-in-out;
+}
+
+.move-to-center {
+  transform: translateX(0);
+  transition: transform .5s ease-in-out;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+  transform: translateX(0);
 }
 
 /* Carousel Navigation */
@@ -77,10 +102,14 @@ main {
 }
 
 .carousel__indicator {
-  cursor: pointer;
   width: 15px;
   height: 15px;
   border: none;
   background-color: rgb(196, 196, 196);
+  transition: background-color .2s linear;
   border-radius: 50%;
+}
+
+.selected {
+  background-color: rgb(131, 131, 131);
 }
