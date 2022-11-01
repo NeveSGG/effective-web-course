@@ -65,25 +65,19 @@ main {
   width: 1000px;
   height: 500px;
   transform: translateX(0);
+  transition: transform 0.5s linear;
 }
 
 .move-to-left {
   transform: translateX(-100%);
-  transition: transform .5s ease-in-out;
 }
 
 .move-to-right {
   transform: translateX(100%);
-  transition: transform .5s ease-in-out;
 }
 
 .move-to-center {
   transform: translateX(0);
-  transition: transform .5s ease-in-out;
-}
-
-.show {
-  display: block;
 }
 
 .hide {
@@ -106,7 +100,7 @@ main {
   height: 15px;
   border: none;
   background-color: rgb(196, 196, 196);
-  transition: background-color .2s linear;
+  transition: background-color 0.2s linear;
   border-radius: 50%;
 }
 
