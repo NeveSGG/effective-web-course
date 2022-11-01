@@ -15,13 +15,13 @@
     <main>
       <div class="timer">
         <div class="timer__buttons">
-          <button class="timer__buttons__button">
+          <button class="timer__buttons__button" id="oneMin">
             + 1 min
           </button>
-          <button class="timer__buttons__button">
+          <button class="timer__buttons__button" id="fiveMin">
             + 5 min
           </button>
-          <button class="timer__buttons__button">
+          <button class="timer__buttons__button" id="tenMin">
             + 10 min
           </button>
         </div>
@@ -29,21 +29,25 @@
           <input 
             class="timer__inputs__input"
             type="number"
+            id="minInput"
+            onchange="inputChange()"
           />
           <p class="timer__inputs__separator">:</p>
           <input 
             class="timer__inputs__input"
             type="number"
+            id="secInput"
+            onchange="inputChange()"
           />
         </div>
         <div class="timer__control-buttons">
-          <button class="timer__control-buttons__button">
+          <button class="timer__control-buttons__button" id="startButton">
             Start
           </button>
-          <button class="timer__control-buttons__button">
+          <button class="timer__control-buttons__button" id="stopButton">
             Stop
           </button>
-          <button class="timer__control-buttons__button">
+          <button class="timer__control-buttons__button" id="resetButton">
             Reset
           </button>
         </div>

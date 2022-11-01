@@ -39,12 +39,19 @@
   background-color: rgb(233, 233, 233);
 }
 
+.timer__buttons__button:disabled,
+.timer__buttons__button[disabled] {
+  cursor: not-allowed;
+  height: 50px;
+  background-color: rgb(240, 240, 240);
+}
+
 .timer__inputs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-bottom: 50px;
 }
 
 input::-webkit-outer-spin-button,
@@ -58,21 +65,21 @@ input[type=number] {
 }
 
 .timer__inputs__input {
-    height: 70px;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 40px;
-    font-weight: 600;
-    border-radius: 10px;
-    border: 1px solid rgb(206, 206, 206);
-    text-align: center;
-    width: 100px;
+  height: 70px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 40px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  width: 60px;
 }
 
 .timer__inputs__input:disabled,
 .timer__inputs__input[readonly] {
   cursor: not-allowed;
-  background-color: #f5f5f5;
-  opacity: 1;
+  background: none;
+  color: black;
 }
 
 .timer__inputs__separator {
@@ -112,4 +119,11 @@ input[type=number] {
 
 .timer__control-buttons__button:hover {
   background-color: rgb(233, 233, 233);
+}
+
+.timer__control-buttons__button:disabled,
+.timer__control-buttons__button[disabled] {
+  cursor: not-allowed;
+  height: 50px;
+  background-color: rgb(240, 240, 240);
 }
