@@ -98,6 +98,8 @@ const startTimer = () => {
 }
 
 const stopTimer = () => {
+  localStorage.isStarted = "false";
+
   isStopped = true;
   resetButton.disabled = false;
   stopButton.disabled = true;
@@ -107,15 +109,19 @@ const resetTimer = () => {
   localStorage.isStarted = "false";
 
   isStopped = true;
+
   oneMin.disabled = false;
   fiveMin.disabled = false;
   tenMin.disabled = false;
+
   stopButton.disabled = true;
+
   minInput.readOnly = false;
   secInput.readOnly = false;
 
   localStorage.minutes = 0;
   localStorage.seconds = 0;
+  
   inputsOnChange(localStorage.minutes, localStorage.seconds);
   body.classList.remove("onFinish");
 }
@@ -129,12 +135,17 @@ const inputChange = () => {
 }
 
 stopButton.disabled = true;
+resetButton.disabled = false;
+
 oneMin.disabled = true;
 fiveMin.disabled = true;
 tenMin.disabled = true;
-resetButton.disabled = false;
+
+minInput.readOnly = true;
+secInput.readOnly = true;
 
 inputsOnChange(minutes, seconds);
+
 if (localStorage.isStarted === "true") {
   startTimer();
 }
