@@ -1,3 +1,5 @@
+const body = document.getElementById("body");
+
 const minInput = document.getElementById("minInput");
 const secInput = document.getElementById("secInput");
 
@@ -27,6 +29,9 @@ if (localStorage.minutes) {
 } else {
   localStorage.setItem("minutes", 0);
 }
+if (!localStorage.isStarted) {
+  localStorage.setItem("isStarted", false);
+}
 
 const inputsOnChange = (min, sec) => {
   const min1 = parseInt(min);
@@ -49,20 +54,17 @@ const inputsOnChange = (min, sec) => {
 }
 
 const onFinish = () => {
-  if (localStorage.isFinished) {
-    if (localStorage.isFinished === "false") {
-      audio.play()
-      isStopped = true;
-      stopButton.disabled = true;
-      resetButton.disabled = false;
-      
-      minInput.readOnly = false;
-      secInput.readOnly = false;
-    }
-  } else {
-    localStorage.setItem("isFinished", "true");
-  }
-  
+  if (localStorage.isStarted === "true") {
+    audio.play()
+    isStopped = true;
+    stopButton.disabled = true;
+    resetButton.disabled = false;
+    
+    minInput.readOnly = false;
+    secInput.readOnly = false;
+
+    body.classList.add("onFinish");
+  }  
 }
 
 const timer = setInterval(() => {
@@ -90,10 +92,9 @@ const startTimer = () => {
     minInput.readOnly = true;
     secInput.readOnly = true;
 
-    localStorage.isFinished = "false";
+    localStorage.isStarted = "true";
   }
 
-  
 }
 
 const stopTimer = () => {
@@ -103,7 +104,7 @@ const stopTimer = () => {
 }
 
 const resetTimer = () => {
-  localStorage.isFinished = "true";
+  localStorage.isStarted = "false";
 
   isStopped = true;
   oneMin.disabled = false;
@@ -116,6 +117,7 @@ const resetTimer = () => {
   localStorage.minutes = 0;
   localStorage.seconds = 0;
   inputsOnChange(localStorage.minutes, localStorage.seconds);
+  body.classList.remove("onFinish");
 }
 
 const addMinutes = (mins) => {
@@ -133,7 +135,9 @@ tenMin.disabled = true;
 resetButton.disabled = false;
 
 inputsOnChange(minutes, seconds);
-stopTimer();
+if (localStorage.isStarted === "true") {
+  startTimer();
+}
 
 startButton.addEventListener("click", startTimer);
 stopButton.addEventListener("click", stopTimer);
