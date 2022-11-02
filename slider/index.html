@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vanilla js</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <main>
+      <div class="carousel">
+        <button class="carousel__button carousel__button--left" id="button1">
+        <img 
+          src="./assets/img/arrowLeft.svg"
+          />
+        </button>
+        <div class="carousel__track-container">
+          <ul class="carousel__track">
+            <li class="carousel__slide">
+              <img class="carousel__slide__image" src="assets/img/image-1.jpg" alt="">
+            </li>
+            <li class="carousel__slide">
+              <img class="carousel__slide__image" src="assets/img/image-2.jpg" alt="">
+            </li>
+            <li class="carousel__slide">
+              <img class="carousel__slide__image" src="assets/img/image-3.jpg" alt="">
+            </li>
+            <li class="carousel__slide">
+              <img class="carousel__slide__image" src="assets/img/image-4.jpg" alt="">
+            </li>
+          </ul>
+        </div>
+        <button class="carousel__button carousel__button--right" id="button2">
+        <img 
+          src="./assets/img/arrowRight.svg"
+          />
+        </button>
+        <div class="carousel__nav">
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+          <button class="carousel__indicator"></button>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="./index.js"></script>
+</html>
