@@ -15,7 +15,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import Slide from '@mui/material/Slide';
 
-import logo from '../../marvel_logo.svg';
+import logo from '../../assets/marvel_logo.svg';
 
 interface Props {
   children: React.ReactElement;
@@ -46,14 +46,15 @@ const Header: FC = () => {
 
   return (
     <HideOnScroll>
-      <AppBar>
+      <AppBar color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box
               sx={{
                 width: 90,
                 display: { xs: 'none', md: 'block' },
-                mr: 1
+                pt: 1,
+                mr: 0
               }}
             >
               <img src={logo} alt="logo" />
@@ -100,7 +101,8 @@ const Header: FC = () => {
               sx={{
                 width: 90,
                 display: { xs: 'block', md: 'none' },
-                mr: 1
+                pt: 1,
+                mr: 0
               }}
             >
               <img src={logo} alt="logo" />
