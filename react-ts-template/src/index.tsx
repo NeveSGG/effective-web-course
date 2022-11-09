@@ -9,11 +9,11 @@ import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <BrowserRouter>
+    <BrowserRouter>
+      <StyledEngineProvider injectFirst>
         <CssBaseline />
         <App />
-      </BrowserRouter>
-    </StyledEngineProvider>
+      </StyledEngineProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
