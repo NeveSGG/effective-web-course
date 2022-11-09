@@ -53,7 +53,8 @@ const Header: FC = () => {
               sx={{
                 width: 90,
                 display: { xs: 'none', md: 'block' },
-                mr: 1
+                pt: 1,
+                mr: 0
               }}
             >
               <img src={logo} alt="logo" />
@@ -100,7 +101,8 @@ const Header: FC = () => {
               sx={{
                 width: 90,
                 display: { xs: 'block', md: 'none' },
-                mr: 1
+                pt: 1,
+                mr: 0
               }}
             >
               <img src={logo} alt="logo" />
