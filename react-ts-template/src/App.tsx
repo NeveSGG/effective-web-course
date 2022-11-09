@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   ThemeProvider,
-  createTheme,
   Paper,
   Typography
 } from '@mui/material';
@@ -12,35 +11,14 @@ import {
 import Header from 'components/header';
 import Footer from 'components/footer';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#e62429'
-    },
-    secondary: {
-      main: '#909090'
-    }
-  }
-});
-
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#e62429'
-    },
-    secondary: {
-      main: '#909090'
-    }
-  }
-});
+// Themes
+import themes from 'themes';
 
 const App: FC = () => {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={themes.dark}>
       <Header />
-      <Paper elevation={0}>
+      <Paper elevation={0} square>
         <Container>
           <Box
             sx={{

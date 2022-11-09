@@ -1,14 +1,18 @@
 import React, { FC } from 'react';
-
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import { Link, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Container,
+  Link,
+  Typography
+} from '@mui/material';
 
 import logo from '../../assets/marvel_logo.svg';
 
 const Footer: FC = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <AppBar position="static" color="secondary">
       <Container maxWidth="xl">
@@ -25,7 +29,7 @@ const Footer: FC = () => {
           </Box>
           <Box>
             <Typography variant="subtitle2" align="right">
-              Data provided by Marvel. © 2022 MARVEL
+              Data provided by Marvel. © {currentYear} MARVEL
             </Typography>
             <Typography variant="subtitle2" align="right">
               <Link href="developer.marvel.com" underline="hover" color="error">
