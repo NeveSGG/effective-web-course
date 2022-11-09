@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -11,6 +12,10 @@ import {
 // Components
 import Header from 'components/header';
 import Footer from 'components/footer';
+import Characters from 'components/characters';
+import Series from 'components/series';
+import Comics from 'components/comics';
+import NoMatchError from 'components/no-match-error';
 
 const darkTheme = createTheme({
   palette: {
@@ -36,31 +41,31 @@ const lightTheme = createTheme({
   }
 });
 
+const Layout = () => <Outlet />;
+
 const App: FC = () => {
+  const routes: RouteObject[] = [
+    {
+      path: '/characters',
+      element: <Characters />
+    },
+    {
+      path: '/comics',
+      element: <Comics />
+    },
+    {
+      path: '/series',
+      element: <Series />
+    },
+    { path: '*', element: <NoMatchError /> }
+  ];
+
+  const element = useRoutes(routes);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Header />
-      <Paper elevation={0}>
-        <Container>
-          <Box
-            sx={{
-              pt: { xs: 10, sm: 13, md: 17, lg: 19 },
-              pb: { xs: 7, sm: 10, md: 14, lg: 16 }
-            }}
-          >
-            <Typography>
-              {[...new Array(90)]
-                .map(
-                  () => `Cras mattis consectetur purus sit amet fermentum.
-    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-                )
-                .join('\n')}
-            </Typography>
-          </Box>
-        </Container>
-      </Paper>
+      {element}
       <Footer />
     </ThemeProvider>
   );
