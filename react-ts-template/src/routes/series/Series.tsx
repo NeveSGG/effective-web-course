@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
+import { Box } from '@mui/material';
 
 const Series: FC = () => {
   return (
-    <div>
-      <p>Series</p>
-    </div>
+    <Box>
+      <div>
+        <p>Series</p>
+      </div>
+    </Box>
   );
 };
 

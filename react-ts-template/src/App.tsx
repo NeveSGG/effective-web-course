@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -9,16 +10,41 @@ import {
 
 // Components
 import Header from 'components/header';
+import NoMatchError from 'routes/no-match-error';
 import Footer from 'components/footer';
+import Characters from 'routes/characters';
+import Series from 'routes/series';
+import Comics from 'routes/comics';
 
 // Themes
 import themes from 'themes';
 
 const App: FC = () => {
+  const routes: RouteObject[] = [
+    {
+      path: '/',
+      element: <Outlet />,
+      children: [
+        { index: true, element: <Characters /> },
+        {
+          path: '/comics',
+          element: <Comics />
+        },
+        {
+          path: '/series',
+          element: <Series />
+        },
+        { path: '*', element: <NoMatchError /> }
+      ]
+    }
+  ];
+
+  const element = useRoutes(routes);
+
   return (
     <ThemeProvider theme={themes.dark}>
       <Header />
-      <Paper elevation={0}>
+      <Paper elevation={0} square sx={{ minHeight: '92.8vh' }}>
         <Container>
           <Box
             sx={{
@@ -26,16 +52,7 @@ const App: FC = () => {
               pb: { xs: 7, sm: 10, md: 14, lg: 16 }
             }}
           >
-            <Typography>
-              {[...new Array(90)]
-                .map(
-                  () => `Cras mattis consectetur purus sit amet fermentum.
-    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-                )
-                .join('\n')}
-            </Typography>
+            {element}
           </Box>
         </Container>
       </Paper>

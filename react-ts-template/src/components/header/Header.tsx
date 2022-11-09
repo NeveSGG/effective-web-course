@@ -15,6 +15,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import Slide from '@mui/material/Slide';
 
+import { Link } from 'react-router-dom';
 import logo from '../../assets/marvel_logo.svg';
 
 interface Props {
@@ -92,7 +93,9 @@ const Header: FC = () => {
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Link to={`/${page}`.replace('Characters', '')}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </Link>
                   </MenuItem>
                 ))}
               </Menu>
@@ -115,11 +118,11 @@ const Header: FC = () => {
             >
               {pages.map((page) => (
                 <Button
-                  key={page}
+                  key={`${page}111`}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {page}
+                  <Link to={`/${page}`.replace('Characters', '')}>{page}</Link>
                 </Button>
               ))}
             </Box>

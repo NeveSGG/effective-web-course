@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
+import { Box } from '@mui/material';
 
 const NoMatchError: FC = () => {
   return (
-    <div>
-      <p>NoMatchError</p>
-    </div>
+    <Box>
+      <div>
+        <p>NoMatchError</p>
+      </div>
+    </Box>
   );
 };
 
