@@ -1,9 +1,9 @@
 // В этом файле массив со всем путями / роутами приложения
+import React from 'react';
 
 export default [
   {
     path: '404',
-    // eslint-disable-next-line react/react-in-jsx-scope
     element: <div>Not Found</div>
   }
 ];
