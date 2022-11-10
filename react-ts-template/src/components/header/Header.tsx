@@ -1,21 +1,20 @@
 import React, { FC, useState } from 'react';
-
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  useScrollTrigger,
+  Slide
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-
-import Slide from '@mui/material/Slide';
 
 import { Link } from 'react-router-dom';
+
 import logo from '../../assets/marvel_logo.svg';
 
 interface Props {
@@ -92,9 +91,16 @@ const Header: FC = () => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`.replace('Characters', '')}>
-                      <Typography textAlign="center">{page}</Typography>
+                  <MenuItem
+                    key={page}
+                    color="primary"
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Link
+                      to={`/${page}`.replace('Characters', '')}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      {page}
                     </Link>
                   </MenuItem>
                 ))}
@@ -120,9 +126,18 @@ const Header: FC = () => {
                 <Button
                   key={`${page}111`}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  color="secondary"
+                  sx={{
+                    my: 2,
+                    display: 'block'
+                  }}
                 >
-                  <Link to={`/${page}`.replace('Characters', '')}>{page}</Link>
+                  <Link
+                    to={`/${page}`.replace('Characters', '')}
+                    style={{ textDecoration: 'none', color: 'white' }}
+                  >
+                    {page}
+                  </Link>
                 </Button>
               ))}
             </Box>

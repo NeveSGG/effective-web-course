@@ -1,17 +1,13 @@
 import React, { FC } from 'react';
 import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  ThemeProvider,
-  Paper,
-  Typography
-} from '@mui/material';
+import { Box, Container, ThemeProvider, Paper } from '@mui/material';
 
 // Components
 import Header from 'components/header';
-import NoMatchError from 'routes/no-match-error';
 import Footer from 'components/footer';
+
+// Routes
+import NoMatchError from 'routes/no-match-error';
 import Characters from 'routes/characters';
 import Series from 'routes/series';
 import Comics from 'routes/comics';
@@ -42,14 +38,15 @@ const App: FC = () => {
   const element = useRoutes(routes);
 
   return (
-    <ThemeProvider theme={themes.dark}>
+    <ThemeProvider theme={themes.light}>
       <Header />
-      <Paper elevation={0} square sx={{ minHeight: '92.8vh' }}>
+      <Paper elevation={0} square sx={{ minHeight: '92.8vh', flexGrow: 1 }}>
         <Container>
           <Box
             sx={{
               pt: { xs: 10, sm: 13, md: 17, lg: 19 },
-              pb: { xs: 7, sm: 10, md: 14, lg: 16 }
+              pb: { xs: 7, sm: 10, md: 14, lg: 16 },
+              px: 'auto'
             }}
           >
             {element}

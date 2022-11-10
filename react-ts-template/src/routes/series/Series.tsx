@@ -1,13 +1,25 @@
 import React, { FC } from 'react';
-import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
+
+import CustomCard from 'components/card';
+
+import seriesData from 'mocks/seriesData';
 
 const Series: FC = () => {
   return (
-    <Box>
-      <div>
-        <p>Series</p>
-      </div>
-    </Box>
+    <Grid container spacing={2}>
+      {seriesData.map((series, id) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Grid item key={`${id}123`}>
+          <CustomCard
+            image={series.image}
+            imageAlt={series.imageAlt}
+            name={series.name}
+            description={series.description}
+          />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
