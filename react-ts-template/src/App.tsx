@@ -45,8 +45,7 @@ const App: FC = () => {
           <Box
             sx={{
               pt: { xs: 10, sm: 13, md: 17, lg: 19 },
-              pb: { xs: 7, sm: 10, md: 14, lg: 16 },
-              px: 'auto'
+              pb: { xs: 7, sm: 10, md: 14, lg: 16 }
             }}
           >
             {element}
