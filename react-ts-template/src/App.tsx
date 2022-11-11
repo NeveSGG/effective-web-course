@@ -38,7 +38,7 @@ const App: FC = () => {
   const element = useRoutes(routes);
 
   return (
-    <ThemeProvider theme={themes.light}>
+    <ThemeProvider theme={themes.dark}>
       <Header />
       <Paper elevation={0} square sx={{ minHeight: '92.8vh', flexGrow: 1 }}>
         <Container>

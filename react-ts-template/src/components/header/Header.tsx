@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import logo from '../../assets/marvel_logo.svg';
 
@@ -35,6 +35,8 @@ const HideOnScroll = ({ children }: Props) => {
 
 const Header: FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+  const { pathname } = useLocation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -95,10 +97,11 @@ const Header: FC = () => {
                     key={page}
                     color="primary"
                     onClick={handleCloseNavMenu}
+                    selected={pathname === `/${page}`.replace('Characters', '')}
                   >
                     <Link
                       to={`/${page}`.replace('Characters', '')}
-                      style={{ textDecoration: 'none' }}
+                      style={{ textDecoration: 'none', color: 'gray' }}
                     >
                       {page}
                     </Link>
@@ -131,6 +134,11 @@ const Header: FC = () => {
                     my: 2,
                     display: 'block'
                   }}
+                  variant={
+                    pathname === `/${page}`.replace('Characters', '')
+                      ? 'outlined'
+                      : 'text'
+                  }
                 >
                   <Link
                     to={`/${page}`.replace('Characters', '')}
