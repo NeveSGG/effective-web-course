@@ -26,10 +26,10 @@ const Series: FC = () => {
         </Typography>
       </Box>
       <Search searchText="Series" />
-      <Grid container spacing={2}>
+      <Grid container spacing={2} xs={12}>
         {seriesData.map((series, id) => (
           // eslint-disable-next-line react/no-array-index-key
-          <Grid item key={`${id}123`}>
+          <Grid item xs={12} sm={6} md={4} key={`${id}123`}>
             <CustomCard
               image={series.image}
               imageAlt={series.imageAlt}
