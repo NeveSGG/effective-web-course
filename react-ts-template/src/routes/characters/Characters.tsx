@@ -26,10 +26,10 @@ const Characters: FC = () => {
         </Typography>
       </Box>
       <Search searchText="Characters by Name" />
-      <Grid container spacing={2}>
+      <Grid container spacing={2} xs={12}>
         {charactersData.map((character, id) => (
           // eslint-disable-next-line react/no-array-index-key
-          <Grid item key={`${id}123`}>
+          <Grid item xs={12} sm={6} md={4} key={`${id}123`} sx={{ margin: 0 }}>
             <CustomCard
               image={character.image}
               imageAlt={character.imageAlt}
