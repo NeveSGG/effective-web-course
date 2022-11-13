@@ -26,7 +26,7 @@ const Characters: FC = () => {
         </Typography>
       </Box>
       <Search searchText="Characters by Name" />
-      <Grid container spacing={2} xs={12}>
+      <Grid container spacing={2}>
         {charactersData.map((character, id) => (
           // eslint-disable-next-line react/no-array-index-key
           <Grid item xs={12} sm={6} md={4} key={`${id}123`}>
