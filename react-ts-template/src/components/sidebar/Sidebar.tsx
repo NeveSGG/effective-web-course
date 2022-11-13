@@ -1,31 +1,11 @@
 import React, { FC, useState } from 'react';
 import { observer } from 'mobx-react';
-import {
-  Box,
-  IconButton,
-  SwipeableDrawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Tabs,
-  Tab
-} from '@mui/material';
+import { Box, IconButton, SwipeableDrawer, Tabs, Tab } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import themesStore from 'stores/ThemesStore';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
 
 const Sidebar: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -43,7 +23,7 @@ const Sidebar: FC = () => {
       setSidebarOpen(open);
     };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = () => {
     if (themesStore.themeInd === 0) {
       themesStore.changeTheme('dark');
     } else if (themesStore.themeInd === 1) {
@@ -79,18 +59,6 @@ const Sidebar: FC = () => {
           />
         </Tabs>
       </Box>
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </Box>
   );
 

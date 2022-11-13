@@ -1,15 +1,7 @@
-import React, { FC, useMemo, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import {
-  Box,
-  Container,
-  ThemeProvider,
-  Paper,
-  createTheme
-} from '@mui/material';
-import * as locales from '@mui/material/locale';
-import { Theme } from '@mui/system';
+import { Box, Container, ThemeProvider, Paper } from '@mui/material';
 
 // Components
 import Header from 'components/header';
@@ -24,21 +16,7 @@ import Comics from 'routes/comics';
 // Themes
 import themesStore from 'stores/ThemesStore';
 
-type SupportedLocales = keyof typeof locales;
-
 const App: FC = () => {
-  const [locale, setLocale] = useState<SupportedLocales>('ruRU');
-
-  // const lightThemeRu = useMemo(
-  //   () => createTheme(themes.light, locales[locale]),
-  //   [locale, themes.light]
-  // );
-
-  // const darkThemeRu = useMemo(
-  //   () => createTheme(themes.dark, locales[locale]),
-  //   [locale, themes.dark]
-  // );
-
   const routes: RouteObject[] = [
     {
       path: '/',
