@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { Link, useLocation } from 'react-router-dom';
 
+import Sidebar from 'components/sidebar';
+
 import logo from '../../assets/marvel_logo.svg';
 
 interface Props {
@@ -35,7 +37,6 @@ const HideOnScroll = ({ children }: Props) => {
 
 const Header: FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-
   const { pathname } = useLocation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -45,7 +46,6 @@ const Header: FC = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   return (
     <HideOnScroll>
       <AppBar color="primary">
@@ -149,6 +149,7 @@ const Header: FC = () => {
                 </Button>
               ))}
             </Box>
+            <Sidebar />
           </Toolbar>
         </Container>
       </AppBar>

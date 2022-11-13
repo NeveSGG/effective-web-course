@@ -1,6 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo, useState, useEffect } from 'react';
 import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
-import { Box, Container, ThemeProvider, Paper } from '@mui/material';
+import { observer } from 'mobx-react-lite';
+import {
+  Box,
+  Container,
+  ThemeProvider,
+  Paper,
+  createTheme
+} from '@mui/material';
+import * as locales from '@mui/material/locale';
+import { Theme } from '@mui/system';
 
 // Components
 import Header from 'components/header';
@@ -13,9 +22,23 @@ import Series from 'routes/series';
 import Comics from 'routes/comics';
 
 // Themes
-import themes from 'themes';
+import themesStore from 'stores/ThemesStore';
+
+type SupportedLocales = keyof typeof locales;
 
 const App: FC = () => {
+  const [locale, setLocale] = useState<SupportedLocales>('ruRU');
+
+  // const lightThemeRu = useMemo(
+  //   () => createTheme(themes.light, locales[locale]),
+  //   [locale, themes.light]
+  // );
+
+  // const darkThemeRu = useMemo(
+  //   () => createTheme(themes.dark, locales[locale]),
+  //   [locale, themes.dark]
+  // );
+
   const routes: RouteObject[] = [
     {
       path: '/',
@@ -38,7 +61,7 @@ const App: FC = () => {
   const element = useRoutes(routes);
 
   return (
-    <ThemeProvider theme={themes.dark}>
+    <ThemeProvider theme={themesStore.theme}>
       <Header />
       <Paper elevation={0} square sx={{ minHeight: '92.8vh', flexGrow: 1 }}>
         <Container>
@@ -57,4 +80,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default observer(App);
