@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import {
   Box,
@@ -17,11 +17,12 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import themesStore from 'stores/ThemesStore';
-
 import translationStore from 'stores/TranslationStore';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -38,6 +39,7 @@ const Sidebar: FC = () => {
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     translationStore.changeLanguage(event.target.value);
+    i18n.changeLanguage(translationStore.language);
   };
 
   const handleThemeChange = () => {
@@ -79,7 +81,7 @@ const Sidebar: FC = () => {
       <Box sx={{ width: '100%', px: 2, py: 3 }}>
         <FormControl sx={{ width: '100%' }}>
           <InputLabel id="demo-simple-select-autowidth-label">
-            Language
+            <>{t('language_label')}</>
           </InputLabel>
           <Select
             labelId="demo-simple-select-autowidth-label"
@@ -89,8 +91,8 @@ const Sidebar: FC = () => {
             label="Language"
             fullWidth
           >
-            <MenuItem value="ru-RU">Русский</MenuItem>
-            <MenuItem value="en-US">English</MenuItem>
+            <MenuItem value="ru">Русский</MenuItem>
+            <MenuItem value="en">English</MenuItem>
           </Select>
         </FormControl>
       </Box>

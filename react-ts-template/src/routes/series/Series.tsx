@@ -5,8 +5,10 @@ import CustomCard from 'components/card';
 import Search from 'components/search';
 
 import seriesData from 'mocks/seriesData';
+import { useTranslation } from 'react-i18next';
 
 const Series: FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Box
@@ -19,9 +21,9 @@ const Series: FC = () => {
         }}
       >
         <Typography variant="h3" fontWeight={800} gutterBottom>
-          Series
+          <>{t('Series')}</>
         </Typography>
-        <Typography variant="h5" sx={{ pb: 2 }} gutterBottom>
+        <Typography variant="h5" sx={{ pb: { xs: 1, sm: 2 } }} gutterBottom>
           (3)
         </Typography>
       </Box>

@@ -5,8 +5,10 @@ import CustomCard from 'components/card';
 
 import charactersData from 'mocks/charactersData';
 import Search from 'components/search';
+import { useTranslation } from 'react-i18next';
 
 const Characters: FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Box
@@ -19,13 +21,13 @@ const Characters: FC = () => {
         }}
       >
         <Typography variant="h3" fontWeight={800} gutterBottom>
-          Characters
+          <>{t('Characters')}</>
         </Typography>
         <Typography variant="h5" sx={{ pb: { xs: 1, sm: 2 } }} gutterBottom>
           (9)
         </Typography>
       </Box>
-      <Search searchText="Characters by Name" />
+      <Search searchText="Characters" />
       <Grid container spacing={2}>
         {charactersData.map((character, id) => (
           // eslint-disable-next-line react/no-array-index-key

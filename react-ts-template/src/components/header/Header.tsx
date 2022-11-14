@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { observer } from 'mobx-react';
 import {
   AppBar,
   Box,
@@ -16,6 +17,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useLocation } from 'react-router-dom';
 
 import Sidebar from 'components/sidebar';
+import { useTranslation } from 'react-i18next';
+
+import translationStore from 'stores/TranslationStore';
 
 import logo from '../../assets/marvel_logo.svg';
 
@@ -38,6 +42,8 @@ const HideOnScroll = ({ children }: Props) => {
 const Header: FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const { pathname } = useLocation();
+
+  const { t, i18n } = useTranslation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -103,7 +109,7 @@ const Header: FC = () => {
                       to={`/${page}`.replace('Characters', '')}
                       style={{ textDecoration: 'none', color: 'gray' }}
                     >
-                      {page}
+                      <>{t(page)}</>
                     </Link>
                   </MenuItem>
                 ))}
@@ -144,7 +150,7 @@ const Header: FC = () => {
                     to={`/${page}`.replace('Characters', '')}
                     style={{ textDecoration: 'none', color: 'white' }}
                   >
-                    {page}
+                    <>{t(page)}</>
                   </Link>
                 </Button>
               ))}
@@ -157,4 +163,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default observer(Header);

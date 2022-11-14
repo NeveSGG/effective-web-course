@@ -16,5 +16,5 @@ class TranslationStore {
   }
 }
 
-const translationStore = new TranslationStore('en-US');
+const translationStore = new TranslationStore('en');
 export default translationStore;

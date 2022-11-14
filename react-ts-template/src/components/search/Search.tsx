@@ -1,12 +1,14 @@
 import React, { FC } from 'react';
 import { Box, Button, Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import { useTranslation } from 'react-i18next';
 
 interface PropType {
   searchText: string;
 }
 
 const Search: FC<PropType> = ({ searchText }) => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Box
@@ -20,7 +22,7 @@ const Search: FC<PropType> = ({ searchText }) => {
       >
         <TextField
           id="outlined-search"
-          label={`Search for ${searchText}`}
+          label={t(`search_${searchText}`).toString()}
           type="search"
           sx={{ width: { xs: '100%', md: '77.5%' } }}
         />
@@ -28,7 +30,7 @@ const Search: FC<PropType> = ({ searchText }) => {
           variant="contained"
           sx={{ width: { xs: '100%', md: '20%' }, height: 55 }}
         >
-          SEARCH
+          <>{t('search')}</>
         </Button>
       </Box>
       <Divider variant="middle" sx={{ my: 7 }} />

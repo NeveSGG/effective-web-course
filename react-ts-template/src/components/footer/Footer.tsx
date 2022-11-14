@@ -8,9 +8,12 @@ import {
   Typography
 } from '@mui/material';
 
+import { useTranslation } from 'react-i18next';
+
 import logo from '../../assets/marvel_logo.svg';
 
 const Footer: FC = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -28,10 +31,10 @@ const Footer: FC = () => {
             <img src={logo} alt="logo" />
           </Box>
           <Box>
-            <Typography variant="subtitle2" align="right">
-              Data provided by Marvel. © {currentYear} MARVEL
+            <Typography variant="body2" align="right">
+              <>{t('footer')}</> Marvel. © {currentYear} MARVEL
             </Typography>
-            <Typography variant="subtitle2" align="right">
+            <Typography variant="body2" align="right">
               <Link href="developer.marvel.com" underline="hover" color="error">
                 developer.marvel.com
               </Link>
