@@ -17,14 +17,11 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import themesStore from 'stores/ThemesStore';
-import { useTranslation } from 'react-i18next';
 
 import translationStore from 'stores/TranslationStore';
 
 const Sidebar: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-
-  const { t, i18n } = useTranslation(translationStore.language);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -82,7 +79,7 @@ const Sidebar: FC = () => {
       <Box sx={{ width: '100%', px: 2, py: 3 }}>
         <FormControl sx={{ width: '100%' }}>
           <InputLabel id="demo-simple-select-autowidth-label">
-            {t('Language')}
+            Language
           </InputLabel>
           <Select
             labelId="demo-simple-select-autowidth-label"
