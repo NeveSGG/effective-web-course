@@ -1,14 +1,30 @@
 import React, { FC, useState } from 'react';
 import { observer } from 'mobx-react';
-import { Box, IconButton, SwipeableDrawer, Tabs, Tab } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  SwipeableDrawer,
+  Tabs,
+  Tab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import themesStore from 'stores/ThemesStore';
+import { useTranslation } from 'react-i18next';
+
+import translationStore from 'stores/TranslationStore';
 
 const Sidebar: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+
+  const { t, i18n } = useTranslation(translationStore.language);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -23,7 +39,11 @@ const Sidebar: FC = () => {
       setSidebarOpen(open);
     };
 
-  const handleChange = () => {
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    translationStore.changeLanguage(event.target.value);
+  };
+
+  const handleThemeChange = () => {
     if (themesStore.themeInd === 0) {
       themesStore.changeTheme('dark');
     } else if (themesStore.themeInd === 1) {
@@ -44,7 +64,7 @@ const Sidebar: FC = () => {
         <Tabs
           sx={{ height: { xs: 55, sm: 64, md: 70 } }}
           value={themesStore.themeInd}
-          onChange={handleChange}
+          onChange={handleThemeChange}
           aria-label="theme tabs"
         >
           <Tab
@@ -58,6 +78,24 @@ const Sidebar: FC = () => {
             sx={{ width: '50%', height: { xs: 55, sm: 64, md: 70 } }}
           />
         </Tabs>
+      </Box>
+      <Box sx={{ width: '100%', px: 2, py: 3 }}>
+        <FormControl sx={{ width: '100%' }}>
+          <InputLabel id="demo-simple-select-autowidth-label">
+            {t('Language')}
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={translationStore.language}
+            onChange={handleSelectChange}
+            label="Language"
+            fullWidth
+          >
+            <MenuItem value="ru-RU">Русский</MenuItem>
+            <MenuItem value="en-US">English</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
     </Box>
   );
