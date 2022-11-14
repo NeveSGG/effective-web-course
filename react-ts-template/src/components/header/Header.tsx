@@ -19,8 +19,6 @@ import { Link, useLocation } from 'react-router-dom';
 import Sidebar from 'components/sidebar';
 import { useTranslation } from 'react-i18next';
 
-import translationStore from 'stores/TranslationStore';
-
 import logo from '../../assets/marvel_logo.svg';
 
 interface Props {
@@ -43,7 +41,7 @@ const Header: FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const { pathname } = useLocation();
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
