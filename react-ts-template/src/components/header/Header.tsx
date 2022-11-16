@@ -47,7 +47,7 @@ const Header: FC = () => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleClickOutsideNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickOutsideNavMenu = () => {
     setAnchorElNav(null);
   };
 
