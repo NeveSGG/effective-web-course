@@ -14,7 +14,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { observer } from 'mobx-react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Sidebar from 'components/sidebar';
@@ -40,16 +40,25 @@ const HideOnScroll = ({ children }: Props) => {
 const Header: FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleClickOutsideNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(null);
   };
+
+  const handleCloseNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const path = `/${event.currentTarget.id}`
+      .replace('randomValueToRemove', '')
+      .replace('Characters', '');
+    navigate(path);
+    setAnchorElNav(null);
+  };
+
   return (
     <HideOnScroll>
       <AppBar color="primary">
@@ -91,7 +100,7 @@ const Header: FC = () => {
                   horizontal: 'left'
                 }}
                 open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                onClose={handleClickOutsideNavMenu}
                 sx={{
                   display: { xs: 'block', md: 'none' }
                 }}
@@ -99,16 +108,12 @@ const Header: FC = () => {
                 {pages.map((page) => (
                   <MenuItem
                     key={page}
+                    id={page}
                     color="primary"
                     onClick={handleCloseNavMenu}
                     selected={pathname === `/${page}`.replace('Characters', '')}
                   >
-                    <Link
-                      to={`/${page}`.replace('Characters', '')}
-                      style={{ textDecoration: 'none', color: 'gray' }}
-                    >
-                      <>{t(page)}</>
-                    </Link>
+                    {t(page)}
                   </MenuItem>
                 ))}
               </Menu>
@@ -131,9 +136,10 @@ const Header: FC = () => {
             >
               {pages.map((page) => (
                 <Button
-                  key={`${page}111`}
+                  key={`${page}randomValueToRemove`}
+                  id={`${page}randomValueToRemove`}
                   onClick={handleCloseNavMenu}
-                  color="secondary"
+                  color="warning"
                   sx={{
                     my: 2,
                     display: 'block'
@@ -144,12 +150,7 @@ const Header: FC = () => {
                       : 'text'
                   }
                 >
-                  <Link
-                    to={`/${page}`.replace('Characters', '')}
-                    style={{ textDecoration: 'none', color: 'white' }}
-                  >
-                    <>{t(page)}</>
-                  </Link>
+                  {t(page)}
                 </Button>
               ))}
             </Box>

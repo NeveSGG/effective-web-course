@@ -11,6 +11,9 @@ const darkTheme: Theme = responsiveFontSizes(
       },
       secondary: {
         main: '#909090'
+      },
+      warning: {
+        main: '#fbfbfb'
       }
     }
   })
@@ -25,6 +28,9 @@ const lightTheme: Theme = responsiveFontSizes(
       },
       secondary: {
         main: '#909090'
+      },
+      warning: {
+        main: '#fbfbfb'
       }
     }
   })

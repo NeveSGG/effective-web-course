@@ -101,7 +101,7 @@ const Sidebar: FC = () => {
 
   return (
     <Box>
-      <IconButton onClick={toggleDrawer(true)} color="secondary">
+      <IconButton onClick={toggleDrawer(true)} color="warning">
         <SettingsIcon />
       </IconButton>
       <SwipeableDrawer
