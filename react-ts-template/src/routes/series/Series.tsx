@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 
+import { useTranslation } from 'react-i18next';
+
 import CustomCard from 'components/card';
 import Search from 'components/search';
 
 import seriesData from 'mocks/seriesData';
-import { useTranslation } from 'react-i18next';
 
 const Series: FC = () => {
   const { t } = useTranslation();

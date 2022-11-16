@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Box, Button, Divider } from '@mui/material';
-import TextField from '@mui/material/TextField';
+
+import { Box, Button, Divider, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface PropType {

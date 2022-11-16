@@ -2,7 +2,7 @@ import { observable, action, makeObservable } from 'mobx';
 import { createTheme, responsiveFontSizes } from '@mui/material';
 import { Theme } from '@mui/system';
 
-const darkTheme = responsiveFontSizes(
+const darkTheme: Theme = responsiveFontSizes(
   createTheme({
     palette: {
       mode: 'dark',
@@ -16,7 +16,7 @@ const darkTheme = responsiveFontSizes(
   })
 );
 
-const lightTheme = responsiveFontSizes(
+const lightTheme: Theme = responsiveFontSizes(
   createTheme({
     palette: {
       mode: 'light',

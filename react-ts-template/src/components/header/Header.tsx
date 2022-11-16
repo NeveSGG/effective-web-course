@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { observer } from 'mobx-react';
 import {
   AppBar,
   Box,
@@ -14,10 +13,11 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { observer } from 'mobx-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Sidebar from 'components/sidebar';
-import { useTranslation } from 'react-i18next';
 
 import logo from '../../assets/marvel_logo.svg';
 
