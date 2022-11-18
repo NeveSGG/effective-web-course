@@ -11,7 +11,7 @@ const seriesData: Array<CardProps> = [
     name: 'Marvel`s Daredevil (2015)',
     description:
       'The first in a planned series of shows detailing the Marvel universe, "Daredevil" follows Matt Murdock, attorney by day and vigilante by night. Blinded in an accident as a child, Murdock uses his heightened senses as Daredevil to fight crime on the streets of New York after the sun goes down.',
-    id: 0
+    id: 1
   },
   {
     image: image2,
@@ -19,7 +19,7 @@ const seriesData: Array<CardProps> = [
     name: 'Loki (2021)',
     description:
       'Loki, the God of Mischief, steps out of his brother`s shadow to embark on an adventure that takes place after the events of "Avengers: Endgame."',
-    id: 1
+    id: 2
   },
   {
     image: image3,
@@ -27,7 +27,7 @@ const seriesData: Array<CardProps> = [
     name: 'Wandavision (2021)',
     description:
       'Living idealized suburban lives, super-powered beings Wanda and Vision begin to suspect that everything is not as it seems.',
-    id: 2
+    id: 3
   }
 ];
 
