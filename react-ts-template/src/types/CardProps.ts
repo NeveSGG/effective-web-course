@@ -3,4 +3,6 @@ export interface CardProps {
   imageAlt: string;
   name: string;
   description: string;
+  pathname?: string;
+  id: number;
 }
