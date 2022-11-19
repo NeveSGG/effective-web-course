@@ -14,10 +14,10 @@ import Series from 'routes/series';
 import Comics from 'routes/comics';
 import CharacterDescription from 'routes/characterDescription';
 import ComicsDescription from 'routes/comicsDescription';
+import SeriesDescription from 'routes/seriesDescription';
 
 // Themes
 import themesStore from 'stores/ThemesStore';
-import SeriesDescription from 'routes/seriesDescription';
 
 const App: FC = () => {
   const routes: RouteObject[] = [
