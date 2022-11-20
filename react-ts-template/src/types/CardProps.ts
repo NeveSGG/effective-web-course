@@ -1,3 +1,8 @@
+interface RelatedItem {
+  name: string;
+  id: number;
+}
+
 export interface CardProps {
   image: string;
   imageAlt: string;
@@ -5,5 +10,9 @@ export interface CardProps {
   description: string;
   pathname?: string;
   id: number;
-  related?: Record<string, unknown>;
+  related?: {
+    comics?: Array<RelatedItem>;
+    series?: Array<RelatedItem>;
+    characters?: Array<RelatedItem>;
+  };
 }

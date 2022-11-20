@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {
   Typography,
@@ -7,7 +7,8 @@ import {
   CardMedia,
   CardContent,
   Box,
-  Container
+  Container,
+  Grid
 } from '@mui/material';
 
 import { CardProps } from 'types/CardProps';
@@ -40,9 +41,64 @@ const SeriesDescription: FC = () => {
           />
           <Container>
             <CardContent>
-              <Typography variant="body1" color="text.secondary">
+              <Typography
+                variant="h3"
+                gutterBottom
+                textAlign="center"
+                sx={{ pt: 2 }}
+              >
+                {data.name}
+              </Typography>
+              <Typography
+                variant="h6"
+                color="text.secondary"
+                gutterBottom
+                sx={{ pt: 2 }}
+              >
                 {data.description}
               </Typography>
+              <Grid container spacing={2} sx={{ pt: 10, pb: 6 }}>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    textAlign="center"
+                    color="text.secondary"
+                  >
+                    Characters
+                  </Typography>
+                  {data.related?.characters?.map((character) => (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      <Link
+                        to={`/${character.id}`}
+                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                      >
+                        {character.name}
+                      </Link>
+                    </Typography>
+                  ))}
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    textAlign="center"
+                    color="text.secondary"
+                  >
+                    Comics
+                  </Typography>
+                  {data.related?.comics?.map((comics) => (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      <Link
+                        to={`/comics/${comics.id}`}
+                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                      >
+                        {comics.name}
+                      </Link>
+                    </Typography>
+                  ))}
+                </Grid>
+              </Grid>
             </CardContent>
           </Container>
         </Card>

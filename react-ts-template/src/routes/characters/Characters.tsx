@@ -36,9 +36,8 @@ const Characters: FC = () => {
         </Box>
         <Search searchText="Characters" />
         <Grid container spacing={2}>
-          {charactersData.map((character, id) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Grid item xs={12} sm={6} md={4} key={`${id}123`}>
+          {charactersData.map((character) => (
+            <Grid item xs={12} sm={6} md={4} key={`${character}123`}>
               <CustomCard {...character} pathname="/" />
             </Grid>
           ))}

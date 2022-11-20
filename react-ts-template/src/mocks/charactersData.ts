@@ -57,6 +57,22 @@ const charactersData: Array<CardProps> = [
         {
           name: 'Infinity Gauntlet',
           id: 3
+        },
+        {
+          name: 'Infinity Gauntlet',
+          id: 3
+        },
+        {
+          name: 'Infinity Gauntlet',
+          id: 3
+        },
+        {
+          name: 'Infinity Gauntlet',
+          id: 3
+        },
+        {
+          name: 'Infinity Gauntlet',
+          id: 3
         }
       ],
       series: [
