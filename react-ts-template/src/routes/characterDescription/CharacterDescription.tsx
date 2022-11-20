@@ -1,12 +1,13 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
   Typography,
   Card,
-  CardHeader,
   CardMedia,
-  CardContent
+  CardContent,
+  Box,
+  Container
 } from '@mui/material';
 
 import { CardProps } from 'types/CardProps';
@@ -14,49 +15,43 @@ import { CardProps } from 'types/CardProps';
 import charactersData from 'mocks/charactersData';
 
 const CharacterDescription: FC = () => {
-  const [idFound, setIdFound] = useState<boolean>(false);
   const [data, setData] = useState<CardProps | null>(null);
+  const { id } = useParams();
 
-  const ind = useParams().id;
-
-  useMemo(() => {
-    if (ind) {
-      const indInt = parseInt(ind, 10);
-      const t = charactersData.some((character) => character.id === indInt);
-      if (t) {
-        setIdFound(true);
-        const newData = charactersData.find((x) => x.id === indInt);
-        if (newData) setData(newData);
-      } else {
-        setIdFound(false);
+  useEffect(() => {
+    if (id) {
+      const numberId = parseInt(id, 10);
+      const foundData = charactersData.find(
+        (character) => character.id === numberId
+      );
+      if (foundData) {
+        setData(foundData);
       }
-    } else {
-      setIdFound(false);
     }
-  }, [ind]);
+  }, [id]);
 
-  const characterDetails = () => {
-    return (
-      <Card sx={{ width: '100%' }}>
-        <CardMedia
-          component="img"
-          sx={{ height: '30vh' }}
-          image={data?.image}
-          alt={data?.imageAlt}
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {data?.description}
-          </Typography>
-        </CardContent>
-      </Card>
-    );
-  };
-
-  return idFound ? (
-    characterDetails()
-  ) : (
-    <Typography>Character with index {ind} not found.</Typography>
+  return (
+    <Box>
+      {data ? (
+        <Card sx={{ minHeight: '95vh' }}>
+          <CardMedia
+            component="img"
+            image={data.image}
+            alt={data.imageAlt}
+            sx={{ height: { xs: 400, sm: 700 } }}
+          />
+          <Container>
+            <CardContent>
+              <Typography variant="body1" color="text.secondary">
+                {data.description}
+              </Typography>
+            </CardContent>
+          </Container>
+        </Card>
+      ) : (
+        <Typography>Character with index {id} not found.</Typography>
+      )}
+    </Box>
   );
 };
 

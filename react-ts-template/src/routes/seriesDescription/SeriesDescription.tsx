@@ -1,48 +1,55 @@
-import React, { FC, useState, useMemo, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Typography, Card, CardMedia, CardContent } from '@mui/material';
+import {
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  Box,
+  Container
+} from '@mui/material';
 
 import { CardProps } from 'types/CardProps';
 
 import seriesData from 'mocks/seriesData';
 
 const SeriesDescription: FC = () => {
-  const [id, setId] = useState<string | undefined>(useParams().id);
-  const [idFound, setIdFound] = useState<boolean>(false);
   const [data, setData] = useState<CardProps | null>(null);
+  const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       const numberId = parseInt(id, 10);
-      setIdFound(seriesData.some((series) => series.id === numberId));
-    } else {
-      setIdFound(false);
+      const foundData = seriesData.find((series) => series.id === numberId);
+      if (foundData) {
+        setData(foundData);
+      }
     }
   }, [id]);
 
-  const seriesDetails = () => {
-    return (
-      <Card sx={{ width: '100%' }}>
-        <CardMedia
-          component="img"
-          sx={{ height: '30vh' }}
-          image={data?.image}
-          alt={data?.imageAlt}
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {data?.description}
-          </Typography>
-        </CardContent>
-      </Card>
-    );
-  };
-
-  return idFound ? (
-    seriesDetails()
-  ) : (
-    <Typography>Comics with index {id} not found.</Typography>
+  return (
+    <Box>
+      {data ? (
+        <Card sx={{ minHeight: '95vh' }}>
+          <CardMedia
+            component="img"
+            image={data.image}
+            alt={data.imageAlt}
+            sx={{ height: { xs: 400, sm: 700 } }}
+          />
+          <Container>
+            <CardContent>
+              <Typography variant="body1" color="text.secondary">
+                {data.description}
+              </Typography>
+            </CardContent>
+          </Container>
+        </Card>
+      ) : (
+        <Typography>Series with index {id} not found.</Typography>
+      )}
+    </Box>
   );
 };
 

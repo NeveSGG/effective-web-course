@@ -5,4 +5,5 @@ export interface CardProps {
   description: string;
   pathname?: string;
   id: number;
+  related?: Record<string, unknown>;
 }
