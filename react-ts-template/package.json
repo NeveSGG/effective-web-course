@@ -35,7 +35,9 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.0.0",
     "react-router-dom": "^6.4.3",
-    "sass": "^1.56.0"
+    "sass": "^1.56.0",
+    "vite-plugin-favicon": "^1.0.8",
+    "vite-plugin-favicons-inject": "^2.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
