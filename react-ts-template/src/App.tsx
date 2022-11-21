@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { Box, Container, ThemeProvider, Paper } from '@mui/material';
+import { ThemeProvider, Paper } from '@mui/material';
 
 // Components
 import Header from 'components/header';

@@ -14,10 +14,12 @@ import {
 import { CardProps } from 'types/CardProps';
 
 import comicsData from 'mocks/comicsData';
+import { useTranslation } from 'react-i18next';
 
 const ComicsDescription: FC = () => {
   const [data, setData] = useState<CardProps | null>(null);
   const { id } = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (id) {
@@ -65,13 +67,23 @@ const ComicsDescription: FC = () => {
                     textAlign="center"
                     color="text.secondary"
                   >
-                    Characters
+                    {t('Characters')}
                   </Typography>
                   {data.related?.characters?.map((character) => (
-                    <Typography variant="body1" gutterBottom textAlign="center">
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      textAlign="center"
+                      key={`${character.name}555`}
+                    >
                       <Link
                         to={`/${character.id}`}
-                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                        style={{
+                          fontSize: '20px',
+                          textDecoration: 'none',
+                          fontWeight: 600,
+                          color: '#F44336'
+                        }}
                       >
                         {character.name}
                       </Link>
@@ -85,13 +97,23 @@ const ComicsDescription: FC = () => {
                     textAlign="center"
                     color="text.secondary"
                   >
-                    Series
+                    {t('Series')}
                   </Typography>
                   {data.related?.series?.map((series) => (
-                    <Typography variant="body1" gutterBottom textAlign="center">
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      textAlign="center"
+                      key={`${series.name}777`}
+                    >
                       <Link
                         to={`/series/${series.id}`}
-                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                        style={{
+                          fontSize: '20px',
+                          textDecoration: 'none',
+                          fontWeight: 600,
+                          color: '#F44336'
+                        }}
                       >
                         {series.name}
                       </Link>
@@ -103,7 +125,9 @@ const ComicsDescription: FC = () => {
           </Container>
         </Card>
       ) : (
-        <Typography>Comics with index {id} not found.</Typography>
+        <Typography variant="h4" align="center" sx={{ pt: 20 }}>
+          {`${t('Comics')} ${t('with_index')} ${id} ${t('not_found')}.`}
+        </Typography>
       )}
     </Box>
   );

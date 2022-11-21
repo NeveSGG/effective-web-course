@@ -14,19 +14,23 @@ import {
 import { CardProps } from 'types/CardProps';
 
 import charactersData from 'mocks/charactersData';
+import { useTranslation } from 'react-i18next';
 
 const CharacterDescription: FC = () => {
   const [data, setData] = useState<CardProps | null>(null);
   const { id } = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (id) {
+      console.log(parseInt(id, 10));
       const numberId = parseInt(id, 10);
       const foundData = charactersData.find(
         (character) => character.id === numberId
       );
       if (foundData) {
         setData(foundData);
+        console.log(data);
       }
     }
   }, [id]);
@@ -59,7 +63,7 @@ const CharacterDescription: FC = () => {
               >
                 {data.description}
               </Typography>
-              <Grid container spacing={2} sx={{ pt: 10, pb: 6 }}>
+              <Grid container spacing={9} sx={{ pt: 10, pb: 6 }}>
                 <Grid item xs={12} sm={6}>
                   <Typography
                     variant="h5"
@@ -67,13 +71,23 @@ const CharacterDescription: FC = () => {
                     textAlign="center"
                     color="text.secondary"
                   >
-                    Comics
+                    {t('Comics')}
                   </Typography>
                   {data.related?.comics?.map((comics) => (
-                    <Typography variant="body1" gutterBottom textAlign="center">
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      textAlign="center"
+                      key={`${comics.name}999`}
+                    >
                       <Link
                         to={`/comics/${comics.id}`}
-                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                        style={{
+                          fontSize: '20px',
+                          textDecoration: 'none',
+                          fontWeight: 600,
+                          color: '#F44336'
+                        }}
                       >
                         {comics.name}
                       </Link>
@@ -87,13 +101,23 @@ const CharacterDescription: FC = () => {
                     textAlign="center"
                     color="text.secondary"
                   >
-                    Series
+                    {t('Series')}
                   </Typography>
                   {data.related?.series?.map((series) => (
-                    <Typography variant="body1" gutterBottom textAlign="center">
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      textAlign="center"
+                      key={`${series.name}888`}
+                    >
                       <Link
                         to={`/series/${series.id}`}
-                        style={{ fontSize: '20px', textDecoration: 'none' }}
+                        style={{
+                          fontSize: '20px',
+                          textDecoration: 'none',
+                          fontWeight: 600,
+                          color: '#F44336'
+                        }}
                       >
                         {series.name}
                       </Link>
@@ -105,7 +129,9 @@ const CharacterDescription: FC = () => {
           </Container>
         </Card>
       ) : (
-        <Typography>Character with index {id} not found.</Typography>
+        <Typography variant="h4" align="center" sx={{ pt: 20 }}>
+          {`${t('Character')} ${t('with_index')} ${id} ${t('not_found')}.`}
+        </Typography>
       )}
     </Box>
   );
