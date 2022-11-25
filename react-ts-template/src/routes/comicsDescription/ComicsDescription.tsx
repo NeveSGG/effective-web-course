@@ -77,7 +77,7 @@ const ComicsDescription: FC = () => {
                       key={`${character.name}555`}
                     >
                       <Link
-                        to={`/${character.id}`}
+                        to={`/characters/${character.id}`}
                         style={{
                           fontSize: '20px',
                           textDecoration: 'none',

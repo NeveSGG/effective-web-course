@@ -23,14 +23,12 @@ const CharacterDescription: FC = () => {
 
   useEffect(() => {
     if (id) {
-      console.log(parseInt(id, 10));
       const numberId = parseInt(id, 10);
       const foundData = charactersData.find(
         (character) => character.id === numberId
       );
       if (foundData) {
         setData(foundData);
-        console.log(data);
       }
     }
   }, [id]);

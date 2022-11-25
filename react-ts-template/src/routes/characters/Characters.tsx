@@ -38,7 +38,7 @@ const Characters: FC = () => {
         <Grid container spacing={2}>
           {charactersData.map((character) => (
             <Grid item xs={12} sm={6} md={4} key={`${character}123`}>
-              <CustomCard {...character} pathname="/" />
+              <CustomCard {...character} pathname="/Characters/" />
             </Grid>
           ))}
         </Grid>
