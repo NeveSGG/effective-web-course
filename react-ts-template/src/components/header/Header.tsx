@@ -112,7 +112,10 @@ const Header: FC = () => {
                     id={page}
                     color="primary"
                     onClick={handleCloseNavMenu}
-                    selected={pathname === `/${page}`}
+                    selected={
+                      pathname.toLocaleUpperCase() ===
+                      `/${page.toLocaleUpperCase()}`
+                    }
                   >
                     {t(page)}
                   </MenuItem>

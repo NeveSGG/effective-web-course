@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Grid, Box, Typography, Container } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
@@ -6,10 +7,16 @@ import { useTranslation } from 'react-i18next';
 import CustomCard from 'components/card';
 import Search from 'components/search';
 
-import charactersData from 'mocks/charactersData';
+import charactersStore from 'stores/CharactersStore';
 
 const Characters: FC = () => {
   const { t } = useTranslation();
+  const { characters, loading } = charactersStore;
+
+  useEffect(() => {
+    charactersStore.getCharactersList();
+  }, []);
+
   return (
     <Container>
       <Box
@@ -18,33 +25,51 @@ const Characters: FC = () => {
           pb: { xs: 7, sm: 10, md: 14, lg: 16 }
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 2,
-            mb: 2,
-            alignItems: 'end'
-          }}
-        >
-          <Typography variant="h3" fontWeight={800} gutterBottom>
-            <>{t('Characters')}</>
+        {loading ? (
+          <Typography variant="h2" fontWeight={800} gutterBottom>
+            <>Loading...</>
           </Typography>
-          <Typography variant="h5" sx={{ pb: { xs: 1, sm: 2 } }} gutterBottom>
-            (9)
-          </Typography>
-        </Box>
-        <Search searchText="Characters" />
-        <Grid container spacing={2}>
-          {charactersData.map((character) => (
-            <Grid item xs={12} sm={6} md={4} key={`${character}123`}>
-              <CustomCard {...character} pathname="/Characters/" />
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                mb: 2,
+                alignItems: 'end'
+              }}
+            >
+              <Typography variant="h3" fontWeight={800} gutterBottom>
+                <>{t('Characters')}</>
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ pb: { xs: 1, sm: 2 } }}
+                gutterBottom
+              >
+                ({characters.total})
+              </Typography>
+            </Box>
+            <Search searchText="Characters" />
+            <Grid container spacing={{ xs: 2, sm: 3 }}>
+              {characters.results.map((character) => (
+                <Grid item xs={12} sm={6} md={4} key={character.id}>
+                  <CustomCard
+                    image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                    imageAlt={character.name}
+                    name={character.name}
+                    description={character.description}
+                    id={character.id}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          </>
+        )}
       </Box>
     </Container>
   );
 };
 
-export default Characters;
+export default observer(Characters);

@@ -39,7 +39,7 @@ const Series: FC = () => {
           {seriesData.map((series, id) => (
             // eslint-disable-next-line react/no-array-index-key
             <Grid item xs={12} sm={6} md={4} key={`${id}123`}>
-              <CustomCard {...series} pathname="/series/" />
+              {/* <CustomCard {...series} pathname="/series/" /> */}
             </Grid>
           ))}
         </Grid>

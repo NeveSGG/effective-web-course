@@ -39,7 +39,7 @@ const Comics: FC = () => {
           {comicsData.map((comics, id) => (
             // eslint-disable-next-line react/no-array-index-key
             <Grid item xs={12} sm={6} md={4} key={`${id}123`}>
-              <CustomCard {...comics} pathname="/comics/" />
+              {/* <CustomCard {...comics} pathname="/comics/" /> */}
             </Grid>
           ))}
         </Grid>

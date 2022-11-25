@@ -6,20 +6,20 @@ import {
   CardMedia,
   Typography
 } from '@mui/material';
-import { CardProps } from 'types/CardProps';
 import { useNavigate } from 'react-router-dom';
 
-const CustomCard: FC<CardProps> = ({
-  image,
-  imageAlt,
-  name,
-  description,
-  pathname,
-  id
-}) => {
+interface IProps {
+  image: string;
+  imageAlt: string;
+  name: string;
+  description: string;
+  id: number;
+}
+
+const CustomCard: FC<IProps> = ({ image, imageAlt, name, description, id }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`${pathname}${id}`);
+    navigate(`/characters/${id}`);
   };
 
   return (
@@ -27,7 +27,7 @@ const CustomCard: FC<CardProps> = ({
       <CardActionArea onClick={handleClick}>
         <CardMedia component="img" height="220" image={image} alt={imageAlt} />
       </CardActionArea>
-      <CardContent>
+      <CardContent sx={{ minHeight: 200 }}>
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
