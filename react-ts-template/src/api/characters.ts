@@ -11,17 +11,19 @@ interface CharactersList {
     limit: 20;
     total: 1562;
     count: 20;
-    results: [];
+    results: Character[];
   };
 }
 
 export default {
-  async getCharactersList(): Promise<CharactersList> {
-    const response = await axios.get(`/v1/public/characters`);
+  async getCharactersList(offset: number): Promise<CharactersList> {
+    const response = await axios.get(`/v1/public/characters`, {
+      params: { offset }
+    });
     return response.data;
   },
 
-  async getCharacter(characterId: number): Promise<Character> {
+  async getCharacter(characterId: number): Promise<CharactersList> {
     const response = await axios.get(`/v1/public/characters/${characterId}`);
     return response.data;
   }

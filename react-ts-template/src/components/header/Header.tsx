@@ -148,7 +148,12 @@ const Header: FC = () => {
                     my: 2,
                     display: 'block'
                   }}
-                  variant={pathname === `/${page}` ? 'outlined' : 'text'}
+                  variant={
+                    pathname.toLocaleLowerCase() ===
+                    `/${page.toLocaleLowerCase()}`
+                      ? 'outlined'
+                      : 'text'
+                  }
                 >
                   {t(page)}
                 </Button>

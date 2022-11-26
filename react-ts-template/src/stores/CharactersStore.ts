@@ -17,67 +17,12 @@ interface CharactersList {
 
 class CharactersStore {
   @observable
-  character: Character = {
-    id: 0,
-    name: '',
-    description: '',
-    modified: new Date(),
-    thumbnail: {
-      path: '',
-      extension: ''
-    },
-    resourceURI: '',
-    comics: {
-      available: 0,
-      collectionURI: '',
-      items: [
-        {
-          resourceURI: '',
-          name: ''
-        }
-      ],
-      returned: 0
-    },
-    series: {
-      available: 0,
-      collectionURI: '',
-      items: [
-        {
-          resourceURI: '',
-          name: ''
-        }
-      ],
-      returned: 0
-    },
-    stories: {
-      available: 0,
-      collectionURI: '',
-      items: [
-        {
-          resourceURI: '',
-          name: '',
-          type: ''
-        }
-      ],
-      returned: 0
-    },
-    events: {
-      available: 0,
-      collectionURI: '',
-      items: [
-        {
-          resourceURI: '',
-          name: ''
-        }
-      ],
-      returned: 0
-    },
-    urls: [
-      {
-        type: '',
-        url: ''
-      }
-    ]
+  character: CharactersList = {
+    offset: 0,
+    limit: 0,
+    total: 0,
+    count: 0,
+    results: []
   };
 
   @observable
@@ -92,6 +37,9 @@ class CharactersStore {
   @observable
   loading: boolean = false;
 
+  @observable
+  offset: number = 0;
+
   constructor() {
     makeObservable(this);
   }
@@ -103,7 +51,7 @@ class CharactersStore {
       const character = await api.characters.getCharacter(id);
 
       runInAction(() => {
-        this.character = character;
+        this.character = character.data;
       });
     } catch (error) {
       console.error(error);
@@ -115,10 +63,10 @@ class CharactersStore {
   };
 
   @action
-  getCharactersList = async (): Promise<void> => {
+  getCharactersList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
-      const characters = await api.characters.getCharactersList();
+      const characters = await api.characters.getCharactersList(offset || 0);
 
       runInAction(() => {
         this.characters = characters.data;
