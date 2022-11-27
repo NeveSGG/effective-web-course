@@ -22,17 +22,17 @@ import seriesStore from 'stores/SeriesStore';
 
 const Series: FC = () => {
   const { t } = useTranslation();
-  const { seriesList, loading } = seriesStore;
+  const { seriesList, searchResults, titleStartsWith, loading } = seriesStore;
   const [offset, setOffset] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    seriesStore.getSeriesList(offset);
+    if (searchResults) {
+      seriesStore.getSeriesListByTitle(titleStartsWith, offset);
+    } else {
+      seriesStore.getSeriesList(offset);
+    }
   }, [offset]);
-
-  const handleClick = () => {
-    console.log(seriesList);
-  };
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -91,7 +91,7 @@ const Series: FC = () => {
             ({seriesList.total})
           </Typography>
         </Box>
-        <Search searchText="Series" />
+        <Search searchText="Series" defaultValue={titleStartsWith} />
         <Pages />
         {loading ? (
           <CircularProgress />
@@ -106,6 +106,7 @@ const Series: FC = () => {
                     name={serial.title}
                     description={serial.description}
                     id={serial.id}
+                    category="series"
                   />
                 </Grid>
               ))}

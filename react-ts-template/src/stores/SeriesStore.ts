@@ -72,6 +72,13 @@ class SeriesStore {
   getSeriesList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
+      this.series = {
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: []
+      };
       const seriesList = await api.series.getSeriesList(offset || 0);
 
       runInAction(() => {

@@ -91,7 +91,7 @@ const Characters: FC = () => {
             ({characters.total})
           </Typography>
         </Box>
-        <Search searchText="Characters" />
+        <Search searchText="Characters" defaultValue={searchQuery} />
         <Pages />
         {loading ? (
           <CircularProgress />
@@ -106,6 +106,7 @@ const Characters: FC = () => {
                     name={character.name}
                     description={character.description}
                     id={character.id}
+                    category="characters"
                   />
                 </Grid>
               ))}

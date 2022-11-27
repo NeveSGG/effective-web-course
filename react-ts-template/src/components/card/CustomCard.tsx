@@ -14,12 +14,20 @@ interface IProps {
   name: string;
   description: string;
   id: number;
+  category: string;
 }
 
-const CustomCard: FC<IProps> = ({ image, imageAlt, name, description, id }) => {
+const CustomCard: FC<IProps> = ({
+  image,
+  imageAlt,
+  name,
+  description,
+  id,
+  category
+}) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/characters/${id}`);
+    navigate(`/${category}/${id}`);
   };
 
   return (

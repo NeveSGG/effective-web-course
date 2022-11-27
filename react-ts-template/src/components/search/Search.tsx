@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { debounce } from 'lodash';
-import { Box, Button, Divider, TextField } from '@mui/material';
+import { Box, Divider, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import charactersStore from 'stores/CharactersStore';
 import seriesStore from 'stores/SeriesStore';
@@ -9,9 +9,10 @@ import comicsStore from 'stores/ComicsStore';
 
 interface PropType {
   searchText: string;
+  defaultValue: string;
 }
 
-const Search: FC<PropType> = ({ searchText }) => {
+const Search: FC<PropType> = ({ searchText, defaultValue }) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<string>('');
 
@@ -55,6 +56,7 @@ const Search: FC<PropType> = ({ searchText }) => {
         <TextField
           id="outlined-search"
           label={t(`search_${searchText}`).toString()}
+          defaultValue={defaultValue}
           type="search"
           sx={{ width: '100%' }}
           onChange={handleChange}

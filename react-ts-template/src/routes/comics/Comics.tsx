@@ -22,17 +22,17 @@ import comicsStore from 'stores/ComicsStore';
 
 const Comics: FC = () => {
   const { t } = useTranslation();
-  const { comicsList, loading } = comicsStore;
+  const { comicsList, searchResults, titleStartsWith, loading } = comicsStore;
   const [offset, setOffset] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    comicsStore.getComicsList(offset);
+    if (searchResults) {
+      comicsStore.getComicsListByTitle(titleStartsWith, offset);
+    } else {
+      comicsStore.getComicsList(offset);
+    }
   }, [offset]);
-
-  const handleClick = () => {
-    console.log(comicsList);
-  };
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -91,7 +91,7 @@ const Comics: FC = () => {
             ({comicsList.total})
           </Typography>
         </Box>
-        <Search searchText="Comics" />
+        <Search searchText="Comics" defaultValue={titleStartsWith} />
         <Pages />
         {loading ? (
           <CircularProgress />
@@ -106,6 +106,7 @@ const Comics: FC = () => {
                     name={comic.title}
                     description={comic.description}
                     id={comic.id}
+                    category="comics"
                   />
                 </Grid>
               ))}

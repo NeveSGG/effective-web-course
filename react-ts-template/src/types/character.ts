@@ -1,3 +1,8 @@
+interface ItemWithName {
+  resourceURI: string;
+  name: string;
+}
+
 export interface Character {
   id: number;
   name: string;
@@ -11,52 +16,13 @@ export interface Character {
   comics: {
     available: number;
     collectionURI: string;
-    items: [
-      {
-        resourceURI: string;
-        name: string;
-      }
-    ];
+    items: Array<ItemWithName>;
     returned: number;
   };
   series: {
     available: number;
     collectionURI: string;
-    items: [
-      {
-        resourceURI: string;
-        name: string;
-      }
-    ];
+    items: Array<ItemWithName>;
     returned: number;
   };
-  stories: {
-    available: number;
-    collectionURI: string;
-    items: [
-      {
-        resourceURI: string;
-        name: string;
-        type: string;
-      }
-    ];
-    returned: number;
-  };
-  events: {
-    available: number;
-    collectionURI: string;
-    items: [
-      {
-        resourceURI: string;
-        name: string;
-      }
-    ];
-    returned: number;
-  };
-  urls: [
-    {
-      type: string;
-      url: string;
-    }
-  ];
 }

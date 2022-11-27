@@ -72,6 +72,13 @@ class CharactersStore {
   getCharactersList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
+      this.character = {
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: []
+      };
       const characters = await api.characters.getCharactersList(offset || 0);
 
       runInAction(() => {

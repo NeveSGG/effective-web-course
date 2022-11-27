@@ -54,6 +54,13 @@ class ComicsStore {
   getComics = async (id: number): Promise<void> => {
     try {
       this.loading = true;
+      this.comics = {
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: []
+      };
       const comics = await api.comics.getComics(id);
 
       runInAction(() => {

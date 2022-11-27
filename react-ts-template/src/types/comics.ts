@@ -1,3 +1,13 @@
+interface ItemWithName {
+  resourceURI: string;
+  name: string;
+}
+
+interface ItemWithTitle {
+  resourceURI: string;
+  title: string;
+}
+
 export interface Comics {
   id: number;
   digitalId: number;
@@ -13,61 +23,16 @@ export interface Comics {
   issn: string;
   format: string;
   pageCount: number;
-  textObjects: [
-    {
-      type: string;
-      language: string;
-      text: string;
-    }
-  ];
   resourceURI: string;
-  urls: [
-    {
-      type: string;
-      url: string;
-    }
-  ];
-  series: {
-    resourceURI: string;
-    name: string;
-  };
-  dates: [
-    {
-      type: string;
-      date: Date;
-    }
-  ];
-  prices: [
-    {
-      type: string;
-      price: number;
-    }
-  ];
+  series: ItemWithName;
   thumbnail: {
     path: string;
     extension: string;
   };
-  images: [
-    {
-      path: string;
-      extension: string;
-    }
-  ];
   characters: {
     available: number;
     collectionURI: string;
-    items: [
-      {
-        resourceURI: string;
-        name: string;
-      }
-    ];
-    returned: number;
-  };
-  events: {
-    available: number;
-    collectionURI: string;
-    items: [];
+    items: Array<ItemWithName>;
     returned: number;
   };
 }

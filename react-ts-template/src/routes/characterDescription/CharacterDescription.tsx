@@ -19,22 +19,17 @@ const CharacterDescription: FC = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
+  const getIdFromURI = (s: string) => {
+    const newArr = s.split('/');
+    return newArr[newArr.length - 1];
+  };
+
   useEffect(() => {
     if (id) {
       const numberId = parseInt(id, 10);
       charactersStore.getCharacter(numberId);
     }
   }, [id]);
-
-  // const checkIsCharacterFound = () => {
-  //   return character.count ? (
-  //     <CircularProgress sx={{ paddingTop: 30 }} />
-  //   ) : (
-  //     <Typography variant="h4" align="center" sx={{ pt: 20 }}>
-  //       {`${t('Character')} ${t('with_index')} ${id} ${t('not_found')}.`}
-  //     </Typography>
-  //   );
-  // };
 
   return (
     <Box>
@@ -85,16 +80,16 @@ const CharacterDescription: FC = () => {
                   >
                     {t('Comics')}
                   </Typography>
-                  {character.results[0].comics.items ? (
+                  {character.results[0].comics.items.length !== 0 ? (
                     character.results[0].comics.items.map((comics) => (
                       <Typography
                         variant="body1"
                         gutterBottom
                         textAlign="center"
-                        key={`${comics.name}999`}
+                        key={`${comics.resourceURI}111`}
                       >
                         <Link
-                          to={`/comics/${comics.name}`}
+                          to={`/comics/${getIdFromURI(comics.resourceURI)}`}
                           style={{
                             fontSize: '20px',
                             textDecoration: 'none',
@@ -108,7 +103,7 @@ const CharacterDescription: FC = () => {
                     ))
                   ) : (
                     <Typography variant="body1" gutterBottom textAlign="center">
-                      Not Found
+                      No Comics
                     </Typography>
                   )}
                 </Grid>
@@ -121,16 +116,16 @@ const CharacterDescription: FC = () => {
                   >
                     {t('Series')}
                   </Typography>
-                  {character.results[0].series.items ? (
+                  {character.results[0].series.items.length !== 0 ? (
                     character.results[0].series.items.map((series) => (
                       <Typography
                         variant="body1"
                         gutterBottom
                         textAlign="center"
-                        key={`${series.name}888`}
+                        key={`${series.resourceURI}888`}
                       >
                         <Link
-                          to={`/series/${series.name}`}
+                          to={`/series/${getIdFromURI(series.resourceURI)}`}
                           style={{
                             fontSize: '20px',
                             textDecoration: 'none',
@@ -144,7 +139,7 @@ const CharacterDescription: FC = () => {
                     ))
                   ) : (
                     <Typography variant="body1" gutterBottom textAlign="center">
-                      Not Found
+                      No Series
                     </Typography>
                   )}
                 </Grid>
