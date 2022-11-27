@@ -22,12 +22,16 @@ import charactersStore from 'stores/CharactersStore';
 
 const Characters: FC = () => {
   const { t } = useTranslation();
-  const { characters, loading } = charactersStore;
+  const { characters, searchResults, searchQuery, loading } = charactersStore;
   const [offset, setOffset] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    charactersStore.getCharactersList(offset);
+    if (searchResults) {
+      charactersStore.getCharactersListByName(searchQuery, offset);
+    } else {
+      charactersStore.getCharactersList(offset);
+    }
   }, [offset]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

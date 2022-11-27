@@ -5,19 +5,19 @@ import { observable, action, makeObservable, runInAction } from 'mobx';
 import api from 'api';
 
 // Types
-import { Character } from 'types/character';
+import { Comics } from 'types/comics';
 
-interface CharactersList {
+interface ComicsList {
   offset: number;
   limit: number;
   total: number;
   count: number;
-  results: Character[];
+  results: Comics[];
 }
 
-class CharactersStore {
+class ComicsStore {
   @observable
-  character: CharactersList = {
+  comics: ComicsList = {
     offset: 0,
     limit: 0,
     total: 0,
@@ -26,7 +26,7 @@ class CharactersStore {
   };
 
   @observable
-  characters: CharactersList = {
+  comicsList: ComicsList = {
     offset: 0,
     limit: 0,
     total: 0,
@@ -41,23 +41,23 @@ class CharactersStore {
   searchResults: boolean = false;
 
   @observable
-  searchQuery: string = '';
+  offset: number = 0;
 
   @observable
-  offset: number = 0;
+  titleStartsWith: string = '';
 
   constructor() {
     makeObservable(this);
   }
 
   @action
-  getCharacter = async (id: number): Promise<void> => {
+  getComics = async (id: number): Promise<void> => {
     try {
       this.loading = true;
-      const character = await api.characters.getCharacter(id);
+      const comics = await api.comics.getComics(id);
 
       runInAction(() => {
-        this.character = character.data;
+        this.comics = comics.data;
       });
     } catch (error) {
       console.error(error);
@@ -69,13 +69,13 @@ class CharactersStore {
   };
 
   @action
-  getCharactersList = async (offset?: number): Promise<void> => {
+  getComicsList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
-      const characters = await api.characters.getCharactersList(offset || 0);
+      const comicsList = await api.comics.getComicsList(offset || 0);
 
       runInAction(() => {
-        this.characters = characters.data;
+        this.comicsList = comicsList.data;
       });
     } catch (error) {
       console.error(error);
@@ -87,19 +87,19 @@ class CharactersStore {
   };
 
   @action
-  getCharactersListByName = async (
-    nameStartsWith: string,
+  getComicsListByTitle = async (
+    titleStartsWith: string,
     offset?: number
   ): Promise<void> => {
     try {
       this.loading = true;
-      this.searchQuery = nameStartsWith;
-      const characters = await api.characters.getCharactersListByName(
-        nameStartsWith,
+      this.titleStartsWith = titleStartsWith;
+      const comicsList = await api.comics.getComicsListByTitle(
+        titleStartsWith,
         offset || 0
       );
       runInAction(() => {
-        this.characters = characters.data;
+        this.comicsList = comicsList.data;
         this.searchResults = true;
       });
     } catch (error) {
@@ -112,5 +112,5 @@ class CharactersStore {
   };
 }
 
-const charactersStore = new CharactersStore();
+const charactersStore = new ComicsStore();
 export default charactersStore;

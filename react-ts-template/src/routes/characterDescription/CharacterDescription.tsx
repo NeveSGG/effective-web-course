@@ -56,14 +56,25 @@ const CharacterDescription: FC = () => {
               >
                 {character.results[0].name}
               </Typography>
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                gutterBottom
-                sx={{ pt: 2 }}
-              >
-                {character.results[0].description}
-              </Typography>
+              {character.results[0].description ? (
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  gutterBottom
+                  sx={{ pt: 2 }}
+                >
+                  {character.results[0].description}
+                </Typography>
+              ) : (
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  gutterBottom
+                  sx={{ pt: 2 }}
+                >
+                  No description
+                </Typography>
+              )}
               <Grid container spacing={9} sx={{ pt: 10, pb: 6 }}>
                 <Grid item xs={12} sm={6}>
                   <Typography
@@ -74,26 +85,32 @@ const CharacterDescription: FC = () => {
                   >
                     {t('Comics')}
                   </Typography>
-                  {character.results[0].comics.items.map((comics) => (
-                    <Typography
-                      variant="body1"
-                      gutterBottom
-                      textAlign="center"
-                      key={`${comics.name}999`}
-                    >
-                      <Link
-                        to={`/comics/${comics.name}`}
-                        style={{
-                          fontSize: '20px',
-                          textDecoration: 'none',
-                          fontWeight: 600,
-                          color: '#F44336'
-                        }}
+                  {character.results[0].comics.items ? (
+                    character.results[0].comics.items.map((comics) => (
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        textAlign="center"
+                        key={`${comics.name}999`}
                       >
-                        {comics.name}
-                      </Link>
+                        <Link
+                          to={`/comics/${comics.name}`}
+                          style={{
+                            fontSize: '20px',
+                            textDecoration: 'none',
+                            fontWeight: 600,
+                            color: '#F44336'
+                          }}
+                        >
+                          {comics.name}
+                        </Link>
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      Not Found
                     </Typography>
-                  ))}
+                  )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography
@@ -104,26 +121,32 @@ const CharacterDescription: FC = () => {
                   >
                     {t('Series')}
                   </Typography>
-                  {character.results[0].series.items.map((series) => (
-                    <Typography
-                      variant="body1"
-                      gutterBottom
-                      textAlign="center"
-                      key={`${series.name}888`}
-                    >
-                      <Link
-                        to={`/series/${series.name}`}
-                        style={{
-                          fontSize: '20px',
-                          textDecoration: 'none',
-                          fontWeight: 600,
-                          color: '#F44336'
-                        }}
+                  {character.results[0].series.items ? (
+                    character.results[0].series.items.map((series) => (
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        textAlign="center"
+                        key={`${series.name}888`}
                       >
-                        {series.name}
-                      </Link>
+                        <Link
+                          to={`/series/${series.name}`}
+                          style={{
+                            fontSize: '20px',
+                            textDecoration: 'none',
+                            fontWeight: 600,
+                            color: '#F44336'
+                          }}
+                        >
+                          {series.name}
+                        </Link>
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      Not Found
                     </Typography>
-                  ))}
+                  )}
                 </Grid>
               </Grid>
             </CardContent>
