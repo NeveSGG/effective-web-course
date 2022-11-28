@@ -3,11 +3,6 @@ interface ItemWithName {
   name: string;
 }
 
-interface ItemWithTitle {
-  resourceURI: string;
-  title: string;
-}
-
 export interface Comics {
   id: number;
   digitalId: number;

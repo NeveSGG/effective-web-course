@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import seriesStore from 'stores/SeriesStore';
-import md5 from 'md5';
 
 const SeriesDescription: FC = () => {
   const { series } = seriesStore;
