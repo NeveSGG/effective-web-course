@@ -39,33 +39,79 @@ const Series: FC = () => {
     setOffset((value - 1) * 20);
   };
 
-  const Pages = () => (
-    <Box
-      sx={{
-        marginTop: '20px',
-        paddingBottom: '20px',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Stack spacing={2}>
-        <Pagination
-          count={Math.floor(seriesList.total / 20)}
-          page={page}
-          onChange={handleChange}
-          color="primary"
-          renderItem={(item) => (
-            <PaginationItem
-              slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-              {...item}
-            />
-          )}
-        />
-      </Stack>
-    </Box>
-  );
+  const Results = () => {
+    if (seriesList.total !== 0) {
+      return (
+        <>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(seriesList.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+          <Grid container spacing={{ xs: 2, sm: 3 }}>
+            {seriesList.results.map((serial) => (
+              <Grid item xs={12} sm={6} md={4} key={serial.id}>
+                <CustomCard
+                  image={`${serial.thumbnail.path}.${serial.thumbnail.extension}`}
+                  imageAlt={serial.title}
+                  name={serial.title}
+                  description={serial.description}
+                  id={serial.id}
+                  category="characters"
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(seriesList.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+        </>
+      );
+    }
+    return <Typography>Series not found</Typography>;
+  };
 
   return (
     <Container>
@@ -92,28 +138,7 @@ const Series: FC = () => {
           </Typography>
         </Box>
         <Search searchText="Series" defaultValue={titleStartsWith} />
-        <Pages />
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Grid container spacing={{ xs: 2, sm: 3 }}>
-              {seriesList.results.map((serial) => (
-                <Grid item xs={12} sm={6} md={4} key={serial.id}>
-                  <CustomCard
-                    image={`${serial.thumbnail.path}.${serial.thumbnail.extension}`}
-                    imageAlt={serial.title}
-                    name={serial.title}
-                    description={serial.description}
-                    id={serial.id}
-                    category="series"
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <Pages />
-          </>
-        )}
+        {loading ? <CircularProgress /> : <Results />}
       </Box>
     </Container>
   );

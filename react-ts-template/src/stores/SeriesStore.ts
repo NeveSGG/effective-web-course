@@ -72,6 +72,8 @@ class SeriesStore {
   getSeriesList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
+      this.searchResults = false;
+      this.titleStartsWith = '';
       this.series = {
         offset: 0,
         limit: 0,

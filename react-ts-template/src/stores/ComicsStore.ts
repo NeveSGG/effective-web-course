@@ -79,6 +79,8 @@ class ComicsStore {
   getComicsList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
+      this.searchResults = false;
+      this.titleStartsWith = '';
       const comicsList = await api.comics.getComicsList(offset || 0);
 
       runInAction(() => {

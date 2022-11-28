@@ -39,33 +39,79 @@ const Comics: FC = () => {
     setOffset((value - 1) * 20);
   };
 
-  const Pages = () => (
-    <Box
-      sx={{
-        marginTop: '20px',
-        paddingBottom: '20px',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Stack spacing={2}>
-        <Pagination
-          count={Math.floor(comicsList.total / 20)}
-          page={page}
-          onChange={handleChange}
-          color="primary"
-          renderItem={(item) => (
-            <PaginationItem
-              slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-              {...item}
-            />
-          )}
-        />
-      </Stack>
-    </Box>
-  );
+  const Results = () => {
+    if (comicsList.total !== 0) {
+      return (
+        <>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(comicsList.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+          <Grid container spacing={{ xs: 2, sm: 3 }}>
+            {comicsList.results.map((comic) => (
+              <Grid item xs={12} sm={6} md={4} key={comic.id}>
+                <CustomCard
+                  image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                  imageAlt={comic.title}
+                  name={comic.title}
+                  description={comic.description}
+                  id={comic.id}
+                  category="characters"
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(comicsList.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+        </>
+      );
+    }
+    return <Typography>Series not found</Typography>;
+  };
 
   return (
     <Container>
@@ -92,28 +138,7 @@ const Comics: FC = () => {
           </Typography>
         </Box>
         <Search searchText="Comics" defaultValue={titleStartsWith} />
-        <Pages />
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Grid container spacing={{ xs: 2, sm: 3 }}>
-              {comicsList.results.map((comic) => (
-                <Grid item xs={12} sm={6} md={4} key={comic.id}>
-                  <CustomCard
-                    image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-                    imageAlt={comic.title}
-                    name={comic.title}
-                    description={comic.description}
-                    id={comic.id}
-                    category="comics"
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <Pages />
-          </>
-        )}
+        {loading ? <CircularProgress /> : <Results />}
       </Box>
     </Container>
   );

@@ -72,6 +72,8 @@ class CharactersStore {
   getCharactersList = async (offset?: number): Promise<void> => {
     try {
       this.loading = true;
+      this.searchResults = false;
+      this.searchQuery = '';
       this.character = {
         offset: 0,
         limit: 0,

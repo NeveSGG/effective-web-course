@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { debounce } from 'lodash';
 import { Box, Divider, TextField } from '@mui/material';
@@ -14,33 +14,53 @@ interface PropType {
 
 const Search: FC<PropType> = ({ searchText, defaultValue }) => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>(defaultValue);
 
-  if (query) {
-    switch (searchText) {
-      case 'Characters': {
-        charactersStore.getCharactersListByName(query);
-        break;
+  useEffect(() => {
+    if (query) {
+      switch (searchText) {
+        case 'Characters': {
+          charactersStore.getCharactersListByName(query);
+          break;
+        }
+        case 'Series': {
+          seriesStore.getSeriesListByTitle(query);
+          break;
+        }
+        case 'Comics': {
+          comicsStore.getComicsListByTitle(query);
+          break;
+        }
+        default: {
+          break;
+        }
       }
-      case 'Series': {
-        seriesStore.getSeriesListByTitle(query);
-        break;
-      }
-      case 'Comics': {
-        comicsStore.getComicsListByTitle(query);
-        break;
-      }
-      default: {
-        break;
+    } else if (query === '') {
+      switch (searchText) {
+        case 'Characters': {
+          charactersStore.getCharactersList();
+          break;
+        }
+        case 'Series': {
+          seriesStore.getSeriesList();
+          break;
+        }
+        case 'Comics': {
+          comicsStore.getComicsList();
+          break;
+        }
+        default: {
+          break;
+        }
       }
     }
-  }
+  }, [query]);
 
   const updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event?.target?.value);
+    setQuery(event.target.value);
   };
 
-  const handleChange = debounce(updateQuery, 3000);
+  const handleChange = debounce(updateQuery, 1000);
 
   return (
     <Box>

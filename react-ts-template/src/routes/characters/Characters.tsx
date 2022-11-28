@@ -39,33 +39,79 @@ const Characters: FC = () => {
     setOffset((value - 1) * 20);
   };
 
-  const Pages = () => (
-    <Box
-      sx={{
-        marginTop: '20px',
-        paddingBottom: '20px',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Stack spacing={2}>
-        <Pagination
-          count={Math.floor(characters.total / 20)}
-          page={page}
-          onChange={handleChange}
-          color="primary"
-          renderItem={(item) => (
-            <PaginationItem
-              slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-              {...item}
-            />
-          )}
-        />
-      </Stack>
-    </Box>
-  );
+  const Results = () => {
+    if (characters.total !== 0) {
+      return (
+        <>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(characters.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+          <Grid container spacing={{ xs: 2, sm: 3 }}>
+            {characters.results.map((character) => (
+              <Grid item xs={12} sm={6} md={4} key={character.id}>
+                <CustomCard
+                  image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                  imageAlt={character.name}
+                  name={character.name}
+                  description={character.description}
+                  id={character.id}
+                  category="characters"
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              marginTop: '20px',
+              paddingBottom: '20px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(characters.total / 20)}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </Box>
+        </>
+      );
+    }
+    return <Typography>Characters not found</Typography>;
+  };
 
   return (
     <Container>
@@ -92,28 +138,7 @@ const Characters: FC = () => {
           </Typography>
         </Box>
         <Search searchText="Characters" defaultValue={searchQuery} />
-        <Pages />
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Grid container spacing={{ xs: 2, sm: 3 }}>
-              {characters.results.map((character) => (
-                <Grid item xs={12} sm={6} md={4} key={character.id}>
-                  <CustomCard
-                    image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                    imageAlt={character.name}
-                    name={character.name}
-                    description={character.description}
-                    id={character.id}
-                    category="characters"
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <Pages />
-          </>
-        )}
+        {loading ? <CircularProgress /> : <Results />}
       </Box>
     </Container>
   );
