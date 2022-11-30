@@ -1,6 +1,6 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
+import { observer } from 'mobx-react-lite';
 import {
   Typography,
   Card,
@@ -8,37 +8,37 @@ import {
   CardContent,
   Box,
   Container,
-  Grid
+  Grid,
+  CircularProgress
 } from '@mui/material';
-
-import { CardProps } from 'types/CardProps';
-
-import comicsData from 'mocks/comicsData';
 import { useTranslation } from 'react-i18next';
+import comicsStore from 'stores/ComicsStore';
 
 const ComicsDescription: FC = () => {
-  const [data, setData] = useState<CardProps | null>(null);
+  const { comics } = comicsStore;
   const { id } = useParams();
   const { t } = useTranslation();
+
+  const getIdFromURI = (s: string) => {
+    const newArr = s.split('/');
+    return newArr[newArr.length - 1];
+  };
 
   useEffect(() => {
     if (id) {
       const numberId = parseInt(id, 10);
-      const foundData = comicsData.find((comics) => comics.id === numberId);
-      if (foundData) {
-        setData(foundData);
-      }
+      comicsStore.getComics(numberId);
     }
   }, [id]);
 
   return (
     <Box>
-      {data ? (
-        <Card sx={{ minHeight: '95vh' }}>
+      {comics.count ? (
+        <Card sx={{ minHeight: '92.8vh' }}>
           <CardMedia
             component="img"
-            image={data.image}
-            alt={data.imageAlt}
+            image={`${comics.results[0].thumbnail.path}.${comics.results[0].thumbnail.extension}`}
+            alt={comics.results[0].title}
             sx={{ height: { xs: 400, sm: 700 } }}
           />
           <Container>
@@ -49,17 +49,28 @@ const ComicsDescription: FC = () => {
                 textAlign="center"
                 sx={{ pt: 2 }}
               >
-                {data.name}
+                {comics.results[0].title}
               </Typography>
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                gutterBottom
-                sx={{ pt: 2 }}
-              >
-                {data.description}
-              </Typography>
-              <Grid container spacing={2} sx={{ pt: 10, pb: 6 }}>
+              {comics.results[0].description ? (
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  gutterBottom
+                  sx={{ pt: 2 }}
+                >
+                  {comics.results[0].description}
+                </Typography>
+              ) : (
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  gutterBottom
+                  sx={{ pt: 2 }}
+                >
+                  No comics
+                </Typography>
+              )}
+              <Grid container spacing={9} sx={{ pt: 10, pb: 6 }}>
                 <Grid item xs={12} sm={6}>
                   <Typography
                     variant="h5"
@@ -69,26 +80,34 @@ const ComicsDescription: FC = () => {
                   >
                     {t('Characters')}
                   </Typography>
-                  {data.related?.characters?.map((character) => (
-                    <Typography
-                      variant="body1"
-                      gutterBottom
-                      textAlign="center"
-                      key={`${character.name}555`}
-                    >
-                      <Link
-                        to={`/${character.id}`}
-                        style={{
-                          fontSize: '20px',
-                          textDecoration: 'none',
-                          fontWeight: 600,
-                          color: '#F44336'
-                        }}
+                  {comics.results[0].characters.items.length ? (
+                    comics.results[0].characters.items.map((character) => (
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        textAlign="center"
+                        key={`${character.resourceURI}999`}
                       >
-                        {character.name}
-                      </Link>
+                        <Link
+                          to={`/character/${getIdFromURI(
+                            character.resourceURI
+                          )}`}
+                          style={{
+                            fontSize: '20px',
+                            textDecoration: 'none',
+                            fontWeight: 600,
+                            color: '#F44336'
+                          }}
+                        >
+                          {character.name}
+                        </Link>
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      No characters
                     </Typography>
-                  ))}
+                  )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography
@@ -99,15 +118,17 @@ const ComicsDescription: FC = () => {
                   >
                     {t('Series')}
                   </Typography>
-                  {data.related?.series?.map((series) => (
+                  {comics.results[0].series.name ? (
                     <Typography
                       variant="body1"
                       gutterBottom
                       textAlign="center"
-                      key={`${series.name}777`}
+                      key={`${comics.results[0].series.resourceURI}888`}
                     >
                       <Link
-                        to={`/series/${series.id}`}
+                        to={`/series/${getIdFromURI(
+                          comics.results[0].series.resourceURI
+                        )}`}
                         style={{
                           fontSize: '20px',
                           textDecoration: 'none',
@@ -115,22 +136,24 @@ const ComicsDescription: FC = () => {
                           color: '#F44336'
                         }}
                       >
-                        {series.name}
+                        {comics.results[0].series.name}
                       </Link>
                     </Typography>
-                  ))}
+                  ) : (
+                    <Typography variant="body1" gutterBottom textAlign="center">
+                      No Series
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             </CardContent>
           </Container>
         </Card>
       ) : (
-        <Typography variant="h4" align="center" sx={{ pt: 20 }}>
-          {`${t('Comics')} ${t('with_index')} ${id} ${t('not_found')}.`}
-        </Typography>
+        <CircularProgress sx={{ margin: 30 }} />
       )}
     </Box>
   );
 };
 
-export default ComicsDescription;
+export default observer(ComicsDescription);

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Outlet, RouteObject, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, RouteObject, useRoutes } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { ThemeProvider, Paper } from '@mui/material';
 
@@ -27,10 +27,14 @@ const App: FC = () => {
       children: [
         {
           index: true,
+          element: <Navigate to="characters" />
+        },
+        {
+          path: '/characters',
           element: <Characters />
         },
         {
-          path: '/:id',
+          path: '/characters/:id',
           element: <CharacterDescription />
         },
         {

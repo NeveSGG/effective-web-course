@@ -52,9 +52,10 @@ const Header: FC = () => {
   };
 
   const handleCloseNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    const path = `/${event.currentTarget.id}`
-      .replace('randomValueToRemove', '')
-      .replace('Characters', '');
+    const path = `/${event.currentTarget.id}`.replace(
+      'randomValueToRemove',
+      ''
+    );
     navigate(path);
     setAnchorElNav(null);
   };
@@ -111,7 +112,10 @@ const Header: FC = () => {
                     id={page}
                     color="primary"
                     onClick={handleCloseNavMenu}
-                    selected={pathname === `/${page}`.replace('Characters', '')}
+                    selected={
+                      pathname.toLocaleUpperCase() ===
+                      `/${page.toLocaleUpperCase()}`
+                    }
                   >
                     {t(page)}
                   </MenuItem>
@@ -145,7 +149,8 @@ const Header: FC = () => {
                     display: 'block'
                   }}
                   variant={
-                    pathname === `/${page}`.replace('Characters', '')
+                    pathname.toLocaleLowerCase() ===
+                    `/${page.toLocaleLowerCase()}`
                       ? 'outlined'
                       : 'text'
                   }
