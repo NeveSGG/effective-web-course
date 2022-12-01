@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { FC, useState, useEffect } from 'react';
 import {
   Card,
@@ -38,80 +39,29 @@ const CustomCard: FC<IProps> = ({
   id,
   category
 }) => {
-  const [storage, setStorage] = useState<string | null>(
-    localStorage.getItem('favourites')
+  const [storageItem, setStorageItem] = useState<CardData>(() =>
+    JSON.parse(window.localStorage.getItem('favourites') || '[]')
   );
-  const [parsedStorage, setParsedStorage] = useState<CardData | null>(null);
-  const [isIdInStorage, setIsIdInStorage] = useState<boolean>(false);
-  const [elementPosition, setElementPosition] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (storage) {
-      console.log(`1) storage: ${storage}`);
-      const newParsedStorage = JSON.parse(storage);
-      console.log(`2) parsedStorage: ${newParsedStorage}`);
-      setParsedStorage(newParsedStorage);
-      console.log(`2) parsedStorage: ${parsedStorage}`);
-      const foundEl = parsedStorage?.find((el, ind) => {
-        if (el.id === id) {
-          setElementPosition(ind);
-          return true;
-        }
-        return false;
-      });
-      if (foundEl) {
-        setIsIdInStorage(true);
-      } else {
-        setIsIdInStorage(false);
-      }
-    }
-  }, [storage]);
+  const isIdInStorage = storageItem.some((el) => el.id === id);
 
   const handleChangeFav = () => {
-    console.log(
-      `isIdInStorage: ${isIdInStorage}\nelementPosition: ${elementPosition}\nparsedStorage: ${parsedStorage}\nstorage: ${storage}`
-    );
-    if (isIdInStorage && (elementPosition || elementPosition === 0)) {
-      console.log('3) trying to remove...');
-      localStorage.setItem(
-        'favourites',
-        JSON.stringify(parsedStorage?.splice(elementPosition, 1))
-      );
-      setStorage(localStorage.getItem('favourites'));
+    if (!isIdInStorage) {
+      const newStorageItem = [
+        ...storageItem,
+        {
+          id,
+          image,
+          title: name,
+          description,
+          category
+        }
+      ];
+      setStorageItem(newStorageItem);
+      window.localStorage.setItem('favourites', JSON.stringify(newStorageItem));
     } else {
-      console.log('3) trying to add...');
-      if (parsedStorage) {
-        localStorage.setItem(
-          'favourites',
-          JSON.stringify(
-            parsedStorage.concat([
-              {
-                image,
-                title: name,
-                description,
-                id,
-                category
-              }
-            ])
-          )
-        );
-      } else {
-        localStorage.setItem(
-          'favourites',
-          JSON.stringify([
-            {
-              image,
-              title: name,
-              description,
-              id,
-              category
-            }
-          ])
-        );
-      }
-
-      setStorage(localStorage.getItem('favourites'));
-      console.log(`4) final storage: ${storage}`);
+      const newStorageItem = storageItem.filter((el) => el.id !== id);
+      setStorageItem(newStorageItem);
+      window.localStorage.setItem('favourites', JSON.stringify(newStorageItem));
     }
   };
 

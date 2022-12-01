@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 import CustomCard from 'components/card';
 
