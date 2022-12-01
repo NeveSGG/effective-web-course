@@ -77,7 +77,7 @@ const Comics: FC = () => {
                   name={comic.title}
                   description={comic.description}
                   id={comic.id}
-                  category="characters"
+                  category="comics"
                 />
               </Grid>
             ))}

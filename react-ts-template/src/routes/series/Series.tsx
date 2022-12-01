@@ -77,7 +77,7 @@ const Series: FC = () => {
                   name={serial.title}
                   description={serial.description}
                   id={serial.id}
-                  category="characters"
+                  category="series"
                 />
               </Grid>
             ))}

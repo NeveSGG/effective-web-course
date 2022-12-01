@@ -14,6 +14,7 @@ i18n
         translation: {
           Characters: 'Characters',
           Character: 'Character',
+          Favourites: 'Favourites',
           Comics: 'Comics',
           Series: 'Series',
           language_label: 'Language',
@@ -30,6 +31,7 @@ i18n
         translation: {
           Characters: 'Герои',
           Character: 'Герой',
+          Favourites: 'Избранное',
           Comics: 'Комиксы',
           Series: 'Сериалы',
           language_label: 'Язык',
