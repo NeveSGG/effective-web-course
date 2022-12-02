@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
+import { observer } from 'mobx-react-lite';
 import {
   Card,
   CardActionArea,
@@ -11,6 +12,8 @@ import {
 } from '@mui/material';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useNavigate } from 'react-router-dom';
+
+import favouritesStore from 'stores/FavouritesStore';
 
 interface IProps {
   image: string;
@@ -39,15 +42,12 @@ const CustomCard: FC<IProps> = ({
   id,
   category
 }) => {
-  const [storageItem, setStorageItem] = useState<CardData>(() =>
-    JSON.parse(window.localStorage.getItem('favourites') || '[]')
-  );
-  const isIdInStorage = storageItem.some((el) => el.id === id);
+  const { storage } = favouritesStore;
 
   const handleChangeFav = () => {
-    if (!isIdInStorage) {
+    if (!favouritesStore.checkIsFavourite(id)) {
       const newStorageItem = [
-        ...storageItem,
+        ...storage,
         {
           id,
           image,
@@ -56,12 +56,10 @@ const CustomCard: FC<IProps> = ({
           category
         }
       ];
-      setStorageItem(newStorageItem);
-      window.localStorage.setItem('favourites', JSON.stringify(newStorageItem));
+      favouritesStore.updateStorage(newStorageItem);
     } else {
-      const newStorageItem = storageItem.filter((el) => el.id !== id);
-      setStorageItem(newStorageItem);
-      window.localStorage.setItem('favourites', JSON.stringify(newStorageItem));
+      const newStorageItem = storage.filter((el) => el.id !== id);
+      favouritesStore.updateStorage(newStorageItem);
     }
   };
 
@@ -75,7 +73,11 @@ const CustomCard: FC<IProps> = ({
       <CardHeader
         action={
           <IconButton onClick={handleChangeFav}>
-            <GradeIcon color={isIdInStorage ? 'primary' : 'disabled'} />
+            <GradeIcon
+              color={
+                favouritesStore.checkIsFavourite(id) ? 'primary' : 'disabled'
+              }
+            />
           </IconButton>
         }
         title={name}
@@ -85,11 +87,11 @@ const CustomCard: FC<IProps> = ({
       </CardActionArea>
       <CardContent sx={{ minHeight: 200 }}>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {description || 'No description'}
         </Typography>
       </CardContent>
     </Card>
   );
 };
 
-export default CustomCard;
+export default observer(CustomCard);

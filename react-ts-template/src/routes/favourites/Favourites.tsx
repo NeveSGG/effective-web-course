@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import CustomCard from 'components/card';
+import favouritesStore from 'stores/FavouritesStore';
 
 interface CardDataObject {
   id: number;
@@ -13,14 +15,11 @@ interface CardDataObject {
 type CardData = Array<CardDataObject>;
 
 const Favourites: FC = () => {
-  const storage = localStorage.getItem('favourites');
-  const [parsedStorage, setParsedStorage] = useState<CardData | null>();
-
+  const { storage } = favouritesStore;
+  const [stateStorage, setStateStorage] = useState<CardData>(storage);
   useEffect(() => {
-    if (storage) {
-      setParsedStorage(JSON.parse(storage));
-    }
-  }, []);
+    setStateStorage(storage);
+  }, [storage]);
 
   return (
     <Container>
@@ -30,9 +29,9 @@ const Favourites: FC = () => {
           pb: { xs: 7, sm: 10, md: 14, lg: 16 }
         }}
       >
-        {parsedStorage ? (
+        {stateStorage ? (
           <Grid container spacing={{ xs: 2, sm: 3 }}>
-            {parsedStorage.map((el) => (
+            {stateStorage.map((el) => (
               <Grid item xs={12} sm={6} md={4} key={el.id}>
                 <CustomCard
                   id={el.id}
@@ -55,4 +54,4 @@ const Favourites: FC = () => {
   );
 };
 
-export default Favourites;
+export default observer(Favourites);
