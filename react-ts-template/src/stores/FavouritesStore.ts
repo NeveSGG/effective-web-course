@@ -14,7 +14,7 @@ class FavouritesStore {
   storage: Array<CardDataObject>;
 
   constructor() {
-    const onLoadStorage: Array<CardDataObject> = JSON.parse(
+    const onLoadStorage: CardData = JSON.parse(
       localStorage.getItem('favourites') || '[]'
     );
     this.storage = onLoadStorage;
@@ -24,7 +24,7 @@ class FavouritesStore {
     });
   }
 
-  updateStorage(newData: Array<CardDataObject>) {
+  updateStorage(newData: CardData) {
     const stringifiedData = JSON.stringify(newData);
     localStorage.setItem('favourites', stringifiedData);
     this.storage = newData;
