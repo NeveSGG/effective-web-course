@@ -3,6 +3,7 @@ import { Container, Typography, Grid, Box } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import CustomCard from 'components/card';
 import favouritesStore from 'stores/FavouritesStore';
+import { useTranslation } from 'react-i18next';
 
 interface CardDataObject {
   id: number;
@@ -17,6 +18,8 @@ type CardData = Array<CardDataObject>;
 const Favourites: FC = () => {
   const { storage } = favouritesStore;
   const [stateStorage, setStateStorage] = useState<CardData>(storage);
+  const { t } = useTranslation();
+
   useEffect(() => {
     setStateStorage(storage);
   }, [storage]);
@@ -29,7 +32,7 @@ const Favourites: FC = () => {
           pb: { xs: 7, sm: 10, md: 14, lg: 16 }
         }}
       >
-        {stateStorage ? (
+        {stateStorage.length !== 0 ? (
           <Grid container spacing={{ xs: 2, sm: 3 }}>
             {stateStorage.map((el) => (
               <Grid item xs={12} sm={6} md={4} key={el.id}>
@@ -45,9 +48,7 @@ const Favourites: FC = () => {
             ))}
           </Grid>
         ) : (
-          <Typography sx={{ paddingTop: 20 }}>
-            You can add characters, comics and series to your favourites
-          </Typography>
+          <Typography sx={{ paddingTop: 20 }}>{t('empty_fav')}</Typography>
         )}
       </Box>
     </Container>

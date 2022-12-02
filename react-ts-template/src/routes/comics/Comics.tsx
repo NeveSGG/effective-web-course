@@ -110,7 +110,7 @@ const Comics: FC = () => {
         </>
       );
     }
-    return <Typography>Series not found</Typography>;
+    return <Typography>{t('no_series_found')}</Typography>;
   };
 
   return (

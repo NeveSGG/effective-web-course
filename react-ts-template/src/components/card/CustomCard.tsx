@@ -1,6 +1,6 @@
-/* eslint-disable prefer-const */
 import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardActionArea,
@@ -11,9 +11,10 @@ import {
   Typography
 } from '@mui/material';
 import GradeIcon from '@mui/icons-material/Grade';
-import { useNavigate } from 'react-router-dom';
 
 import favouritesStore from 'stores/FavouritesStore';
+
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   image: string;
@@ -23,16 +24,6 @@ interface IProps {
   id: number;
   category: string;
 }
-
-interface CardDataObject {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-  category: string;
-}
-
-type CardData = Array<CardDataObject>;
 
 const CustomCard: FC<IProps> = ({
   image,
@@ -63,6 +54,8 @@ const CustomCard: FC<IProps> = ({
     }
   };
 
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/${category}/${id}`);
@@ -86,8 +79,8 @@ const CustomCard: FC<IProps> = ({
         <CardMedia component="img" height="220" image={image} alt={imageAlt} />
       </CardActionArea>
       <CardContent sx={{ minHeight: 200 }}>
-        <Typography variant="body2" color="text.secondary">
-          {description || 'No description'}
+        <Typography variant="body1" color="text.secondary">
+          {description || t('no_description')}
         </Typography>
       </CardContent>
     </Card>

@@ -110,7 +110,7 @@ const Characters: FC = () => {
         </>
       );
     }
-    return <Typography>Characters not found</Typography>;
+    return <Typography>{t('no_characters_found')}</Typography>;
   };
 
   return (
