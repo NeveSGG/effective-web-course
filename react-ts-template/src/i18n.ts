@@ -24,6 +24,9 @@ i18n
           search_Series: 'Search for series by name',
           with_index: 'with index',
           not_found: 'not found',
+          no_description: 'No Description',
+          no_comics: 'No Comics',
+          no_series: 'No Series',
           footer: 'Data provided by'
         }
       },
@@ -41,6 +44,9 @@ i18n
           search_Series: 'Поиск по сериалам',
           with_index: 'с индексом',
           not_found: 'не найден',
+          no_description: 'Без описания',
+          no_comics: 'Нет связанных комиксов',
+          no_series: 'Нет связанных сериалов',
           footer: 'Информация предоставлена'
         }
       }

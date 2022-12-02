@@ -67,7 +67,7 @@ const ComicsDescription: FC = () => {
                   gutterBottom
                   sx={{ pt: 2 }}
                 >
-                  No comics
+                  No description
                 </Typography>
               )}
               <Grid container spacing={9} sx={{ pt: 10, pb: 6 }}>
