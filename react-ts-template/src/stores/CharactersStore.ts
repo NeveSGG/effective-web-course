@@ -69,54 +69,53 @@ class CharactersStore {
   };
 
   @action
-  getCharactersList = async (offset?: number): Promise<void> => {
-    try {
-      this.loading = true;
-      this.searchResults = false;
-      this.searchQuery = '';
-      this.character = {
-        offset: 0,
-        limit: 0,
-        total: 0,
-        count: 0,
-        results: []
-      };
-      const characters = await api.characters.getCharactersList(offset || 0);
-
-      runInAction(() => {
-        this.characters = characters.data;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
-
-  @action
-  getCharactersListByName = async (
-    nameStartsWith: string,
-    offset?: number
+  getMoreCharacters = async (
+    offset?: number,
+    query?: string
   ): Promise<void> => {
-    try {
-      this.loading = true;
-      this.searchQuery = nameStartsWith;
-      const characters = await api.characters.getCharactersListByName(
-        nameStartsWith,
-        offset || 0
-      );
-      runInAction(() => {
-        this.characters = characters.data;
+    if (!query) {
+      try {
+        this.searchQuery = '';
+        this.searchResults = false;
+        if (offset === 0) this.characters.results = [];
+
+        const characters = await api.characters.getCharactersList(offset || 0);
+
+        runInAction(() => {
+          this.characters = {
+            offset: characters.data.offset,
+            limit: characters.data.limit,
+            total: characters.data.total,
+            count: this.characters.count + characters.data.count,
+            results: [...this.characters.results, ...characters.data.results]
+          };
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
         this.searchResults = true;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
+        this.searchQuery = query;
+        if (offset === 0) this.characters.results = [];
+
+        const characters = await api.characters.getCharactersListByName(
+          query,
+          offset || 0
+        );
+
+        runInAction(() => {
+          this.characters = {
+            offset: characters.data.offset,
+            limit: characters.data.limit,
+            total: characters.data.total,
+            count: this.characters.count + characters.data.count,
+            results: [...this.characters.results, ...characters.data.results]
+          };
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 }

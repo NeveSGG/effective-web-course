@@ -76,50 +76,53 @@ class ComicsStore {
   };
 
   @action
-  getComicsList = async (offset?: number): Promise<void> => {
-    try {
-      this.loading = true;
-      this.searchResults = false;
-      this.titleStartsWith = '';
-      const comicsList = await api.comics.getComicsList(offset || 0);
+  getMoreComics = async (offset?: number, query?: string): Promise<void> => {
+    if (!query) {
+      try {
+        this.titleStartsWith = '';
+        this.searchResults = false;
+        if (offset === 0) this.comicsList.results = [];
 
-      runInAction(() => {
-        this.comicsList = comicsList.data;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
+        const comics = await api.comics.getComicsList(offset || 0);
 
-  @action
-  getComicsListByTitle = async (
-    titleStartsWith: string,
-    offset?: number
-  ): Promise<void> => {
-    try {
-      this.loading = true;
-      this.titleStartsWith = titleStartsWith;
-      const comicsList = await api.comics.getComicsListByTitle(
-        titleStartsWith,
-        offset || 0
-      );
-      runInAction(() => {
-        this.comicsList = comicsList.data;
+        runInAction(() => {
+          this.comicsList = {
+            offset: comics.data.offset,
+            limit: comics.data.limit,
+            total: comics.data.total,
+            count: this.comicsList.count + comics.data.count,
+            results: [...this.comicsList.results, ...comics.data.results]
+          };
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
         this.searchResults = true;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
+        this.titleStartsWith = query;
+        if (offset === 0) this.comicsList.results = [];
+
+        const comics = await api.comics.getComicsListByTitle(
+          query,
+          offset || 0
+        );
+
+        runInAction(() => {
+          this.comicsList = {
+            offset: comics.data.offset,
+            limit: comics.data.limit,
+            total: comics.data.total,
+            count: this.comicsList.count + comics.data.count,
+            results: [...this.comicsList.results, ...comics.data.results]
+          };
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 }
 
-const charactersStore = new ComicsStore();
-export default charactersStore;
+const comicsStore = new ComicsStore();
+export default comicsStore;
