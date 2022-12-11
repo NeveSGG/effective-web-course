@@ -41,6 +41,9 @@ class CharactersStore {
   searchResults: boolean = false;
 
   @observable
+  endReached: boolean = false;
+
+  @observable
   searchQuery: string = '';
 
   @observable
@@ -73,50 +76,69 @@ class CharactersStore {
     offset?: number,
     query?: string
   ): Promise<void> => {
-    if (!query) {
-      try {
-        this.searchQuery = '';
-        this.searchResults = false;
-        if (offset === 0) this.characters.results = [];
+    if (!this.endReached)
+      if (!query) {
+        try {
+          this.searchQuery = '';
+          this.searchResults = false;
+          this.endReached = false;
+          if (offset === 0) this.characters.results = [];
 
-        const characters = await api.characters.getCharactersList(offset || 0);
+          const characters = await api.characters.getCharactersList(
+            offset || 0
+          );
 
-        runInAction(() => {
-          this.characters = {
-            offset: characters.data.offset,
-            limit: characters.data.limit,
-            total: characters.data.total,
-            count: this.characters.count + characters.data.count,
-            results: [...this.characters.results, ...characters.data.results]
-          };
-        });
-      } catch (error) {
-        console.error(error);
+          runInAction(() => {
+            if (characters.data.count === 0) {
+              this.endReached = true;
+            } else {
+              this.characters = {
+                offset: characters.data.offset,
+                limit: characters.data.limit,
+                total: characters.data.total,
+                count: this.characters.count + characters.data.count,
+                results: [
+                  ...this.characters.results,
+                  ...characters.data.results
+                ]
+              };
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          this.searchResults = true;
+          this.searchQuery = query;
+          this.endReached = false;
+          if (offset === 0) this.characters.results = [];
+
+          const characters = await api.characters.getCharactersListByName(
+            query,
+            offset || 0
+          );
+
+          runInAction(() => {
+            if (characters.data.count === 0) {
+              this.endReached = true;
+            } else {
+              this.characters = {
+                offset: characters.data.offset,
+                limit: characters.data.limit,
+                total: characters.data.total,
+                count: this.characters.count + characters.data.count,
+                results: [
+                  ...this.characters.results,
+                  ...characters.data.results
+                ]
+              };
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
       }
-    } else {
-      try {
-        this.searchResults = true;
-        this.searchQuery = query;
-        if (offset === 0) this.characters.results = [];
-
-        const characters = await api.characters.getCharactersListByName(
-          query,
-          offset || 0
-        );
-
-        runInAction(() => {
-          this.characters = {
-            offset: characters.data.offset,
-            limit: characters.data.limit,
-            total: characters.data.total,
-            count: this.characters.count + characters.data.count,
-            results: [...this.characters.results, ...characters.data.results]
-          };
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
 }
 

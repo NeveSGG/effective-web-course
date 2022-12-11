@@ -20,14 +20,17 @@ const Search: FC<PropType> = ({ searchText, defaultValue }) => {
     if (query) {
       switch (searchText) {
         case 'Characters': {
+          charactersStore.endReached = false;
           charactersStore.getMoreCharacters(0, query);
           break;
         }
         case 'Series': {
+          seriesStore.endReached = false;
           seriesStore.getMoreSeries(0, query);
           break;
         }
         case 'Comics': {
+          comicsStore.endReached = false;
           comicsStore.getMoreComics(0, query);
           break;
         }
@@ -38,14 +41,17 @@ const Search: FC<PropType> = ({ searchText, defaultValue }) => {
     } else if (query === '') {
       switch (searchText) {
         case 'Characters': {
+          charactersStore.endReached = false;
           charactersStore.getMoreCharacters(0);
           break;
         }
         case 'Series': {
+          seriesStore.endReached = false;
           seriesStore.getMoreSeries(0);
           break;
         }
         case 'Comics': {
+          comicsStore.endReached = false;
           comicsStore.getMoreComics(0);
           break;
         }

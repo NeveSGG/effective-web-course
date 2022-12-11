@@ -32,6 +32,7 @@ i18n
           no_comics_found: 'No Comics found',
           no_series_found: 'No Series found',
           empty_fav: 'You can add characters, comics and series to your favourites',
+          end_reached: 'That`s all for today',
           footer: 'Data provided by'
         }
       },
@@ -57,6 +58,7 @@ i18n
           no_comics_found: 'Комиксы не найдены',
           no_series_found: 'Сериалы не найдены',
           empty_fav: 'Список Избранного пуст. Вы можете добавлять героев, комиксы и сериалы в Ваше Избранное, нажав на серую звёздочку.',
+          end_reached: 'Конец',
           footer: 'Информация предоставлена'
         }
       }

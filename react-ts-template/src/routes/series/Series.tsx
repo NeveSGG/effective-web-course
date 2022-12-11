@@ -1,10 +1,11 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Box, Typography, Container, CircularProgress } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 
 import { VirtuosoGrid } from 'react-virtuoso';
+import { debounce } from 'lodash';
 
 import CustomCard from 'components/card';
 import Search from 'components/search';
@@ -15,15 +16,18 @@ import { Series as SeriesInterface } from 'types/series';
 
 const Series: FC = () => {
   const { t } = useTranslation();
-  const { seriesList, searchResults, titleStartsWith, loading } = seriesStore;
+  const { seriesList, searchResults, titleStartsWith, loading, endReached } =
+    seriesStore;
 
-  const loadMore = useCallback((ind: number) => {
+  const loadMore = (ind: number) => {
     if (searchResults) {
       seriesStore.getMoreSeries(ind + 1, titleStartsWith);
     } else {
       seriesStore.getMoreSeries(ind + 1);
     }
-  }, []);
+  };
+
+  const handleLoading = debounce(loadMore, 600);
 
   const Results = () => {
     if (seriesList.total === 0) {
@@ -35,12 +39,32 @@ const Series: FC = () => {
         style={{ width: '100%' }}
         useWindowScroll
         data={seriesList.results}
-        endReached={loadMore}
+        endReached={handleLoading}
         components={{
           List: ListContainer,
           Item: ItemContainer,
           Footer: () => {
-            return <CircularProgress />;
+            if (endReached)
+              return (
+                <Typography
+                  variant="body1"
+                  textAlign="center"
+                  sx={{ padding: '20px 0 20px 0' }}
+                >
+                  {t('end_reached')}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            );
           },
           ScrollSeekPlaceholder: () => (
             <ItemWrapper>

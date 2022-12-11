@@ -1,8 +1,9 @@
-import React, { FC, useRef, useCallback } from 'react';
+import React, { FC, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Box, Typography, Container, CircularProgress } from '@mui/material';
 
 import { VirtuosoGrid, VirtuosoHandle } from 'react-virtuoso';
+import { debounce } from 'lodash';
 
 import CustomCard from 'components/card';
 import Search from 'components/search';
@@ -15,17 +16,20 @@ import { useTranslation } from 'react-i18next';
 
 const Characters: FC = () => {
   const { t } = useTranslation();
-  const { characters, searchResults, searchQuery, loading } = charactersStore;
+  const { characters, searchResults, searchQuery, loading, endReached } =
+    charactersStore;
 
   const virtuosoRef = useRef<VirtuosoHandle>(null);
 
-  const loadMore = useCallback((ind: number) => {
+  const loadMore = (ind: number) => {
     if (searchResults) {
       charactersStore.getMoreCharacters(ind + 1, searchQuery);
     } else {
       charactersStore.getMoreCharacters(ind + 1);
     }
-  }, []);
+  };
+
+  const handleLoading = debounce(loadMore, 600);
 
   const Results = () => {
     if (characters.total === 0) {
@@ -37,12 +41,32 @@ const Characters: FC = () => {
         style={{ width: '100%' }}
         useWindowScroll
         data={characters.results}
-        endReached={loadMore}
+        endReached={handleLoading}
         components={{
           List: ListContainer,
           Item: ItemContainer,
           Footer: () => {
-            return <CircularProgress />;
+            if (endReached)
+              return (
+                <Typography
+                  variant="body1"
+                  textAlign="center"
+                  sx={{ padding: '20px 0 20px 0' }}
+                >
+                  {t('end_reached')}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            );
           },
           ScrollSeekPlaceholder: () => (
             <ItemWrapper>
@@ -82,7 +106,7 @@ const Characters: FC = () => {
       <Box
         sx={{
           pt: { xs: 10, sm: 13, md: 17, lg: 19 },
-          pb: { xs: 3, sm: 5, md: 7, lg: 8 }
+          pb: { xs: 8, sm: 11, md: 13, lg: 14 }
         }}
       >
         <Box
