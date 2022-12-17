@@ -20,15 +20,18 @@ const Search: FC<PropType> = ({ searchText, defaultValue }) => {
     if (query) {
       switch (searchText) {
         case 'Characters': {
-          charactersStore.getCharactersListByName(query);
+          charactersStore.endReached = false;
+          charactersStore.getMoreCharacters(0, query);
           break;
         }
         case 'Series': {
-          seriesStore.getSeriesListByTitle(query);
+          seriesStore.endReached = false;
+          seriesStore.getMoreSeries(0, query);
           break;
         }
         case 'Comics': {
-          comicsStore.getComicsListByTitle(query);
+          comicsStore.endReached = false;
+          comicsStore.getMoreComics(0, query);
           break;
         }
         default: {
@@ -38,15 +41,18 @@ const Search: FC<PropType> = ({ searchText, defaultValue }) => {
     } else if (query === '') {
       switch (searchText) {
         case 'Characters': {
-          charactersStore.getCharactersList();
+          charactersStore.endReached = false;
+          charactersStore.getMoreCharacters(0);
           break;
         }
         case 'Series': {
-          seriesStore.getSeriesList();
+          seriesStore.endReached = false;
+          seriesStore.getMoreSeries(0);
           break;
         }
         case 'Comics': {
-          comicsStore.getComicsList();
+          comicsStore.endReached = false;
+          comicsStore.getMoreComics(0);
           break;
         }
         default: {

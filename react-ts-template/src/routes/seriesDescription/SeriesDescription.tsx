@@ -67,7 +67,7 @@ const SeriesDescription: FC = () => {
                   gutterBottom
                   sx={{ pt: 2 }}
                 >
-                  No description
+                  {t('no_description')}
                 </Typography>
               )}
               <Grid container spacing={9} sx={{ pt: 10, pb: 6 }}>
@@ -105,7 +105,7 @@ const SeriesDescription: FC = () => {
                     ))
                   ) : (
                     <Typography variant="body1" gutterBottom textAlign="center">
-                      No Characters
+                      {t('no_characters')}
                     </Typography>
                   )}
                 </Grid>
@@ -141,7 +141,7 @@ const SeriesDescription: FC = () => {
                     ))
                   ) : (
                     <Typography variant="body1" gutterBottom textAlign="center">
-                      No Comics
+                      {t('no_comics')}
                     </Typography>
                   )}
                 </Grid>

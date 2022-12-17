@@ -25,7 +25,7 @@ interface Props {
   children: React.ReactElement;
 }
 
-const pages = ['Characters', 'Comics', 'Series'];
+const pages = ['Characters', 'Comics', 'Series', 'Favourites'];
 
 const HideOnScroll = ({ children }: Props) => {
   const trigger = useScrollTrigger();

@@ -14,6 +14,7 @@ i18n
         translation: {
           Characters: 'Characters',
           Character: 'Character',
+          Favourites: 'Favourites',
           Comics: 'Comics',
           Series: 'Series',
           language_label: 'Language',
@@ -23,6 +24,15 @@ i18n
           search_Series: 'Search for series by name',
           with_index: 'with index',
           not_found: 'not found',
+          no_description: 'No Description',
+          no_characters: 'No Characters',
+          no_comics: 'No Comics',
+          no_series: 'No Series',
+          no_characters_found: 'No Characters found',
+          no_comics_found: 'No Comics found',
+          no_series_found: 'No Series found',
+          empty_fav: 'You can add characters, comics and series to your favourites',
+          end_reached: 'That`s all for today',
           footer: 'Data provided by'
         }
       },
@@ -30,6 +40,7 @@ i18n
         translation: {
           Characters: 'Герои',
           Character: 'Герой',
+          Favourites: 'Избранное',
           Comics: 'Комиксы',
           Series: 'Сериалы',
           language_label: 'Язык',
@@ -39,6 +50,15 @@ i18n
           search_Series: 'Поиск по сериалам',
           with_index: 'с индексом',
           not_found: 'не найден',
+          no_description: 'Без описания',
+          no_characters: 'Нет связанных героев',
+          no_comics: 'Нет связанных комиксов',
+          no_series: 'Нет связанных сериалов',
+          no_characters_found: 'Герои не найдены',
+          no_comics_found: 'Комиксы не найдены',
+          no_series_found: 'Сериалы не найдены',
+          empty_fav: 'Список Избранного пуст. Вы можете добавлять героев, комиксы и сериалы в Ваше Избранное, нажав на серую звёздочку.',
+          end_reached: 'Конец',
           footer: 'Информация предоставлена'
         }
       }

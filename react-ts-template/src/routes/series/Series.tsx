@@ -1,116 +1,101 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
-import {
-  Grid,
-  Box,
-  Typography,
-  Container,
-  Stack,
-  Pagination,
-  PaginationItem,
-  CircularProgress
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Typography, Container, CircularProgress } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 
+import { VirtuosoGrid } from 'react-virtuoso';
+import { debounce } from 'lodash';
+
 import CustomCard from 'components/card';
 import Search from 'components/search';
+import { ItemContainer, ItemWrapper, ListContainer } from 'components/grid';
 
 import seriesStore from 'stores/SeriesStore';
+import { Series as SeriesInterface } from 'types/series';
 
 const Series: FC = () => {
   const { t } = useTranslation();
-  const { seriesList, searchResults, titleStartsWith, loading } = seriesStore;
-  const [offset, setOffset] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
+  const { seriesList, searchResults, titleStartsWith, loading, endReached } =
+    seriesStore;
 
-  useEffect(() => {
+  const loadMore = (ind: number) => {
     if (searchResults) {
-      seriesStore.getSeriesListByTitle(titleStartsWith, offset);
+      seriesStore.getMoreSeries(ind + 1, titleStartsWith);
     } else {
-      seriesStore.getSeriesList(offset);
+      seriesStore.getMoreSeries(ind + 1);
     }
-  }, [offset]);
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    setOffset((value - 1) * 20);
   };
 
+  const handleLoading = debounce(loadMore, 600);
+
   const Results = () => {
-    if (seriesList.total !== 0) {
-      return (
-        <>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(seriesList.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-          <Grid container spacing={{ xs: 2, sm: 3 }}>
-            {seriesList.results.map((serial) => (
-              <Grid item xs={12} sm={6} md={4} key={serial.id}>
-                <CustomCard
-                  image={`${serial.thumbnail.path}.${serial.thumbnail.extension}`}
-                  imageAlt={serial.title}
-                  name={serial.title}
-                  description={serial.description}
-                  id={serial.id}
-                  category="characters"
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(seriesList.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-        </>
-      );
+    if (seriesList.total === 0) {
+      return <Typography>{t('no_characters_found')}</Typography>;
     }
-    return <Typography>Series not found</Typography>;
+
+    return (
+      <VirtuosoGrid
+        style={{ width: '100%' }}
+        useWindowScroll
+        data={seriesList.results}
+        endReached={handleLoading}
+        components={{
+          List: ListContainer,
+          Item: ItemContainer,
+          Footer: () => {
+            if (endReached)
+              return (
+                <Typography
+                  variant="body1"
+                  textAlign="center"
+                  sx={{ padding: '20px 0 20px 0' }}
+                >
+                  {t('end_reached')}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            );
+          },
+          ScrollSeekPlaceholder: () => (
+            <ItemWrapper>
+              <CustomCard
+                image=""
+                imageAlt=""
+                name=""
+                description=""
+                id={0}
+                category="characters"
+                isFound={false}
+              />
+            </ItemWrapper>
+          )
+        }}
+        itemContent={(index: number, series: SeriesInterface) => {
+          return (
+            <ItemWrapper>
+              <CustomCard
+                image={`${series.thumbnail.path}.${series.thumbnail.extension}`}
+                imageAlt={series.title}
+                name={series.title}
+                description={series.description}
+                id={series.id}
+                category="series"
+              />
+            </ItemWrapper>
+          );
+        }}
+      />
+    );
   };
 
   return (

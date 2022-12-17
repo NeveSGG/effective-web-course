@@ -15,6 +15,7 @@ import Comics from 'routes/comics';
 import CharacterDescription from 'routes/characterDescription';
 import ComicsDescription from 'routes/comicsDescription';
 import SeriesDescription from 'routes/seriesDescription';
+import Favourites from 'routes/favourites';
 
 // Themes
 import themesStore from 'stores/ThemesStore';
@@ -52,6 +53,10 @@ const App: FC = () => {
         {
           path: '/series/:id',
           element: <SeriesDescription />
+        },
+        {
+          path: '/favourites',
+          element: <Favourites />
         },
         { path: '*', element: <NoMatchError /> }
       ]

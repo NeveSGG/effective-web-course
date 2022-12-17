@@ -9,12 +9,10 @@ import './i18n';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <StyledEngineProvider injectFirst>
-        <CssBaseline />
-        <App />
-      </StyledEngineProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <CssBaseline />
+      <App />
+    </StyledEngineProvider>
+  </BrowserRouter>
 );

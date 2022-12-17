@@ -41,6 +41,9 @@ class SeriesStore {
   searchResults: boolean = false;
 
   @observable
+  endReached: boolean = false;
+
+  @observable
   offset: number = 0;
 
   @observable
@@ -69,55 +72,52 @@ class SeriesStore {
   };
 
   @action
-  getSeriesList = async (offset?: number): Promise<void> => {
-    try {
-      this.loading = true;
-      this.searchResults = false;
-      this.titleStartsWith = '';
-      this.series = {
-        offset: 0,
-        limit: 0,
-        total: 0,
-        count: 0,
-        results: []
-      };
-      const seriesList = await api.series.getSeriesList(offset || 0);
+  getMoreSeries = async (offset?: number, query?: string): Promise<void> => {
+    if (!this.endReached)
+      if (!query) {
+        try {
+          this.titleStartsWith = '';
+          this.searchResults = false;
+          if (offset === 0) this.seriesList.results = [];
 
-      runInAction(() => {
-        this.seriesList = seriesList.data;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
+          const series = await api.series.getSeriesList(offset || 0);
 
-  @action
-  getSeriesListByTitle = async (
-    titleStartsWith: string,
-    offset?: number
-  ): Promise<void> => {
-    try {
-      this.loading = true;
-      this.titleStartsWith = titleStartsWith;
-      const seriesList = await api.series.getSeriesListByTitle(
-        titleStartsWith,
-        offset || 0
-      );
-      runInAction(() => {
-        this.seriesList = seriesList.data;
-        this.searchResults = true;
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
+          runInAction(() => {
+            this.seriesList = {
+              offset: series.data.offset,
+              limit: series.data.limit,
+              total: series.data.total,
+              count: this.seriesList.count + series.data.count,
+              results: [...this.seriesList.results, ...series.data.results]
+            };
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          this.searchResults = true;
+          this.titleStartsWith = query;
+          if (offset === 0) this.seriesList.results = [];
+
+          const series = await api.series.getSeriesListByTitle(
+            query,
+            offset || 0
+          );
+
+          runInAction(() => {
+            this.seriesList = {
+              offset: series.data.offset,
+              limit: series.data.limit,
+              total: series.data.total,
+              count: this.seriesList.count + series.data.count,
+              results: [...this.seriesList.results, ...series.data.results]
+            };
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
   };
 }
 

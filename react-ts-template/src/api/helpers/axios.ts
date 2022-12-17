@@ -7,10 +7,10 @@ const dateNow = Date.now();
 const instance = axios.create({
   baseURL: envs.baseApiUrl,
   params: {
-    offset: 100,
     ts: dateNow,
     apikey: envs.publicApi,
-    hash: md5(`${dateNow}${envs.privateApi}${envs.publicApi}`)
+    hash: md5(`${dateNow}${envs.privateApi}${envs.publicApi}`),
+    limit: 18
   }
 });
 

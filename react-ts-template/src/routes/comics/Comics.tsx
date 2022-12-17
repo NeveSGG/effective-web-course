@@ -1,116 +1,101 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
-import {
-  Grid,
-  Box,
-  Typography,
-  Container,
-  Stack,
-  Pagination,
-  PaginationItem,
-  CircularProgress
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Typography, Container, CircularProgress } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 
+import { VirtuosoGrid } from 'react-virtuoso';
+import { debounce } from 'lodash';
+
 import CustomCard from 'components/card';
 import Search from 'components/search';
+import { ItemContainer, ItemWrapper, ListContainer } from 'components/grid';
 
 import comicsStore from 'stores/ComicsStore';
+import { Comics as ComicsInterface } from 'types/comics';
 
 const Comics: FC = () => {
   const { t } = useTranslation();
-  const { comicsList, searchResults, titleStartsWith, loading } = comicsStore;
-  const [offset, setOffset] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
+  const { comicsList, searchResults, titleStartsWith, loading, endReached } =
+    comicsStore;
 
-  useEffect(() => {
+  const loadMore = (ind: number) => {
     if (searchResults) {
-      comicsStore.getComicsListByTitle(titleStartsWith, offset);
+      comicsStore.getMoreComics(ind + 1, titleStartsWith);
     } else {
-      comicsStore.getComicsList(offset);
+      comicsStore.getMoreComics(ind + 1);
     }
-  }, [offset]);
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    setOffset((value - 1) * 20);
   };
 
+  const handleLoading = debounce(loadMore, 600);
+
   const Results = () => {
-    if (comicsList.total !== 0) {
-      return (
-        <>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(comicsList.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-          <Grid container spacing={{ xs: 2, sm: 3 }}>
-            {comicsList.results.map((comic) => (
-              <Grid item xs={12} sm={6} md={4} key={comic.id}>
-                <CustomCard
-                  image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-                  imageAlt={comic.title}
-                  name={comic.title}
-                  description={comic.description}
-                  id={comic.id}
-                  category="characters"
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(comicsList.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-        </>
-      );
+    if (comicsList.total === 0) {
+      return <Typography>{t('no_characters_found')}</Typography>;
     }
-    return <Typography>Series not found</Typography>;
+
+    return (
+      <VirtuosoGrid
+        style={{ width: '100%' }}
+        useWindowScroll
+        data={comicsList.results}
+        endReached={handleLoading}
+        components={{
+          List: ListContainer,
+          Item: ItemContainer,
+          Footer: () => {
+            if (endReached)
+              return (
+                <Typography
+                  variant="body1"
+                  textAlign="center"
+                  sx={{ padding: '20px 0 20px 0' }}
+                >
+                  {t('end_reached')}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            );
+          },
+          ScrollSeekPlaceholder: () => (
+            <ItemWrapper>
+              <CustomCard
+                image=""
+                imageAlt=""
+                name=""
+                description=""
+                id={0}
+                category="characters"
+                isFound={false}
+              />
+            </ItemWrapper>
+          )
+        }}
+        itemContent={(index: number, comic: ComicsInterface) => {
+          return (
+            <ItemWrapper>
+              <CustomCard
+                image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                imageAlt={comic.title}
+                name={comic.title}
+                description={comic.description}
+                id={comic.id}
+                category="comics"
+              />
+            </ItemWrapper>
+          );
+        }}
+      />
+    );
   };
 
   return (

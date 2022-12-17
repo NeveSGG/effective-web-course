@@ -20,7 +20,6 @@ export default {
     const response = await axios.get(`/v1/public/series`, {
       params: { offset }
     });
-    console.log(response.data);
     return response.data;
   },
 
@@ -36,7 +35,6 @@ export default {
     const response = await axios.get(`/v1/public/series`, {
       params: { titleStartsWith, offset }
     });
-    console.log(response.data);
     return response.data;
   }
 };

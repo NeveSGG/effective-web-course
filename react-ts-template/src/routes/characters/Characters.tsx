@@ -1,116 +1,104 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import {
-  Grid,
-  Box,
-  Typography,
-  Container,
-  Stack,
-  Pagination,
-  PaginationItem,
-  CircularProgress
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Typography, Container, CircularProgress } from '@mui/material';
 
-import { useTranslation } from 'react-i18next';
+import { VirtuosoGrid, VirtuosoHandle } from 'react-virtuoso';
+import { debounce } from 'lodash';
 
 import CustomCard from 'components/card';
 import Search from 'components/search';
+import { ItemContainer, ItemWrapper, ListContainer } from 'components/grid';
 
 import charactersStore from 'stores/CharactersStore';
+import { Character } from 'types/character';
+
+import { useTranslation } from 'react-i18next';
 
 const Characters: FC = () => {
   const { t } = useTranslation();
-  const { characters, searchResults, searchQuery, loading } = charactersStore;
-  const [offset, setOffset] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
+  const { characters, searchResults, searchQuery, loading, endReached } =
+    charactersStore;
 
-  useEffect(() => {
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
+
+  const loadMore = (ind: number) => {
     if (searchResults) {
-      charactersStore.getCharactersListByName(searchQuery, offset);
+      charactersStore.getMoreCharacters(ind + 1, searchQuery);
     } else {
-      charactersStore.getCharactersList(offset);
+      charactersStore.getMoreCharacters(ind + 1);
     }
-  }, [offset]);
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    setOffset((value - 1) * 20);
   };
 
+  const handleLoading = debounce(loadMore, 600);
+
   const Results = () => {
-    if (characters.total !== 0) {
-      return (
-        <>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(characters.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-          <Grid container spacing={{ xs: 2, sm: 3 }}>
-            {characters.results.map((character) => (
-              <Grid item xs={12} sm={6} md={4} key={character.id}>
-                <CustomCard
-                  image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                  imageAlt={character.name}
-                  name={character.name}
-                  description={character.description}
-                  id={character.id}
-                  category="characters"
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Box
-            sx={{
-              marginTop: '20px',
-              paddingBottom: '20px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(characters.total / 20)}
-                page={page}
-                onChange={handleChange}
-                color="primary"
-                renderItem={(item) => (
-                  <PaginationItem
-                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
-          </Box>
-        </>
-      );
+    if (characters.total === 0) {
+      return <Typography>{t('no_characters_found')}</Typography>;
     }
-    return <Typography>Characters not found</Typography>;
+
+    return (
+      <VirtuosoGrid
+        style={{ width: '100%' }}
+        useWindowScroll
+        data={characters.results}
+        endReached={handleLoading}
+        components={{
+          List: ListContainer,
+          Item: ItemContainer,
+          Footer: () => {
+            if (endReached)
+              return (
+                <Typography
+                  variant="body1"
+                  textAlign="center"
+                  sx={{ padding: '20px 0 20px 0' }}
+                >
+                  {t('end_reached')}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            );
+          },
+          ScrollSeekPlaceholder: () => (
+            <ItemWrapper>
+              <CustomCard
+                image=""
+                imageAlt=""
+                name=""
+                description=""
+                id={0}
+                category="characters"
+                isFound={false}
+              />
+            </ItemWrapper>
+          )
+        }}
+        itemContent={(index: number, character: Character) => {
+          return (
+            <ItemWrapper>
+              <CustomCard
+                image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                imageAlt={character.name}
+                name={character.name}
+                description={character.description}
+                id={character.id}
+                category="characters"
+              />
+            </ItemWrapper>
+          );
+        }}
+        ref={virtuosoRef}
+      />
+    );
   };
 
   return (
@@ -118,7 +106,7 @@ const Characters: FC = () => {
       <Box
         sx={{
           pt: { xs: 10, sm: 13, md: 17, lg: 19 },
-          pb: { xs: 7, sm: 10, md: 14, lg: 16 }
+          pb: { xs: 8, sm: 11, md: 13, lg: 14 }
         }}
       >
         <Box
