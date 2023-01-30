@@ -49,7 +49,3 @@ For production environments...
 yarn
 yarn build
 ```
-
-## License
-
-MIT
