@@ -1,4 +1,5 @@
 # Marfan
+
 ### _Perfect Marvel fan page_
 
 Marfan is a beautiful, mobile-ready, offline-storage compatible,
@@ -13,7 +14,6 @@ ReactJS-powered web application for those, who loves Marvel.
 - EN/RU Language
 - Search by name or title
 - ✨Dark Theme Available✨
-
 
 Marfan helps you to find exactly what you need about Marvel, then you can read some information about it and add to your favourites
 
@@ -38,7 +38,7 @@ Marfan requires [Node.js](https://nodejs.org/) v10+ to run.
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-cd effective-web-course/react-ts-template
+cd effective-web-course/marfan
 yarn
 yarn run
 ```
